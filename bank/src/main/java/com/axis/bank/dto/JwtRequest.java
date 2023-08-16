@@ -1,4 +1,4 @@
-package com.axis.bank.models;
+package com.axis.bank.dto;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class JwtResponse {
-    private String token;
+public class JwtRequest {
     private String username;
+    private String password;
 }
