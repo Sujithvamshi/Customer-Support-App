@@ -1,7 +1,7 @@
 package com.axis.bank.entities;
 
 import lombok.*;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ public class Employee {
     private Long id;
 
     @Column(unique=true)
-    private String employeeID;
+    private String employeeId;
 
     @Column(unique=true)
     private String email;

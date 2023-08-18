@@ -1,6 +1,6 @@
 package com.axis.bank.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Getter

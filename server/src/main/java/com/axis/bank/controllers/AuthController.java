@@ -3,8 +3,6 @@ import com.axis.bank.dto.JwtRequest;
 import com.axis.bank.dto.JwtResponse;
 import com.axis.bank.security.JwtHelper;
 import com.axis.bank.services.CustomUserDetailsService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
-import java.sql.SQLIntegrityConstraintViolationException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLIntegrityConstraintViolationException;
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;

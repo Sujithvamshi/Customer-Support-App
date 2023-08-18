@@ -1,12 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/Login/Login';
+import Register from './components/Login/Register';
+import Dashboard from './components/Home/Dashboard';
 
-function App() {
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <Router>
+      <Routes>
+          <Route path="/" element={<Login/>} />
+          <Route path="/register" element={<Register/>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

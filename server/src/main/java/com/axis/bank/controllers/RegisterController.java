@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/register")
+@RequestMapping("/api/register")
 public class RegisterController {
     @Autowired
     private CustomerRepository customerRepository;
@@ -30,12 +30,13 @@ public class RegisterController {
     private PasswordEncoder passwordEncoder;
     @PostMapping("/customer")
     public String customerRegister(@RequestBody Customer customer){
+        System.out.println(customer);
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         Role roles = roleRepository.findByName("USER").orElseThrow(()-> new RuntimeException("User Not Found!!"));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roles);
         User user = new User();
-        user.setUsername(customer.getCustomerID());
+        user.setUsername(customer.getAccountId());
         user.setPassword(customer.getPassword());
         user.setRoles(roleSet);
         userRepository.save(user);
