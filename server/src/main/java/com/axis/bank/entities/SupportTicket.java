@@ -13,13 +13,11 @@ public class SupportTicket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String accountId;
+    private String status;
     private String subject;
     private String description;
-
-    private String status;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private String comment;
 
 }
+

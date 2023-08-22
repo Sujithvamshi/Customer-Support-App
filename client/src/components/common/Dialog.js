@@ -1,8 +1,9 @@
 import { Dialog as D, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment} from 'react'
 
 function Dialog({isOpen,setIsOpen,title,content,closeText}) {
   return (
+    
       <Transition appear show={isOpen} as={Fragment}>
         <D as="div" className="relative z-10" onClose={()=>{setIsOpen(false)}}>
           <div className="fixed inset-0 overflow-y-auto">

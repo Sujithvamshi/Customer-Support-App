@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
 import java.util.Set;
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,11 +29,12 @@ public class RegisterController {
     private RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @PostMapping("/customer")
-    public String customerRegister(@RequestBody Customer customer){
+    public String customerRegister(@RequestBody Customer customer) {
         System.out.println(customer);
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-        Role roles = roleRepository.findByName("USER").orElseThrow(()-> new RuntimeException("User Not Found!!"));
+        Role roles = roleRepository.findByName("USER").orElseThrow(() -> new RuntimeException("User Not Found!!"));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roles);
         User user = new User();
@@ -43,10 +45,11 @@ public class RegisterController {
         customerRepository.save(customer);
         return "Customer saved successfully and User also Created";
     }
+
     @PostMapping("/employee")
-    public String employeeRegister(@RequestBody Employee employee){
+    public String employeeRegister(@RequestBody Employee employee) {
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-        Role roles = roleRepository.findByName("ADMIN").orElseThrow(()-> new RuntimeException("User Not Found!!"));
+        Role roles = roleRepository.findByName("ADMIN").orElseThrow(() -> new RuntimeException("User Not Found!!"));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roles);
         User user = new User();
@@ -57,4 +60,6 @@ public class RegisterController {
         employeeRepository.save(employee);
         return "Employee saved successfully and User also Created";
     }
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public String duplicateUserHandler(){ return "User already exists !!"; }
 }
