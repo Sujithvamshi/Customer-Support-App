@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Disclosure } from '@headlessui/react'
+import { Accordion } from 'flowbite-react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
 import { AuthApi } from '../../common/Apis';
 import { toast } from '../../common/StylingConstants';
 import Toast from '../../common/Toast';
+import { useNavigate } from 'react-router-dom';
 
 function CustomerFaq() {
     const [faqData,setFaqData] = useState([]);
-    const Fetching = useRef(false)
+    const [searchText,setSearchText] = useState("")
+    const navigate = useNavigate()
     useEffect(()=>{
-      if(!Fetching.current){
-        Fetching.current=true
         getFaqData()
-      }
     },[])
     const getFaqData = async () => {
       await AuthApi.get("/faqs").then((response)=>{
@@ -28,32 +27,35 @@ function CustomerFaq() {
     })
   }
   return (
-    <div className="w-full px-4 pt-16">
-      <Toast />
-      <h1 className="mt-10 text-center text-2xl font-bold text-gray-900">
+    <div className="w-full text-center px-20 pt-20">
+      <form onSubmit={(e)=>{navigate("/tickets/"+searchText)}}>
+      <label className="block font-normal mb-1">Track Complaint Ticket</label>
+      <input
+              type="text"
+              className="border rounded p-1 w-1/2 mb-2"
+              name='question'
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+        <button onClick={(e)=>{navigate("/tickets/"+searchText)}} className="inline-flex mt-5 mb-20 items-center rounded-lg bg-indigo-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+        Search</button>
+        </form>
+      <h1 className="mb-10 text-center text-2xl font-bold text-gray-900">
       Freqently Asked Questions (FAQ's)</h1>
-
-      <div className="mx-auto my-5 w-full max-w-md rounded-2xl bg-white p-2">
-        {faqData.map(faq => 
-          <Disclosure as="div" className="mt-2">
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="flex w-full justify-between rounded-lg bg-indigo-100 px-6 py-4 my-5 text-left text-m font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-indigo-500 focus-visible:ring-opacity-75">
-                <span>{faq.question}</span>
-                <ChevronUpIcon
-                  className={`${
-                    open ? 'rotate-180 transform' : ''
-                  } h-5 w-5 text-indigo-900`}
-                />
-              </Disclosure.Button>
-              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-900">
-               {faq.answer}
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-        )}
+    {faqData.map((faq)=>
+      <div className="flex justify-center">
+      <Accordion collapseAll className="w-3/4">
+      <Accordion.Panel className="w-full">
+      <Accordion.Title>
+      {faq.question}
+      </Accordion.Title>
+      <Accordion.Content>
+          {faq.answer}
+      </Accordion.Content>
+      </Accordion.Panel>
+      </Accordion>
       </div>
+      )}
     </div>
   )
 }

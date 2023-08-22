@@ -1,1 +1,1 @@
-export const faqpage=""
+export const statuses=["All","Open","In Progress","Waiting For Customer","Resolved","Closed"]

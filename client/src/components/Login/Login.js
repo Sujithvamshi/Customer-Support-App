@@ -11,6 +11,7 @@ function Login() {
     username:"",
     password:""
   })
+  localStorage.clear()
   const register = () => {
     navigate("/register")
    }

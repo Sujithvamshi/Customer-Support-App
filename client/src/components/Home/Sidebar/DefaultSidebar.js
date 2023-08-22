@@ -1,9 +1,10 @@
 import { Sidebar } from 'flowbite-react';
-import { HiArrowSmRight, HiChartPie,HiTicket, HiShoppingBag, HiTable, HiUser } from 'react-icons/hi';
+import { HiChartPie,HiTicket,HiArrowSmRight, HiUser } from 'react-icons/hi';
 
 function DefaultSidebar() {
   return (
     <Sidebar className="sticky h-screen w-60 top-0">
+        {"Hello " + localStorage.getItem("username") + " ( " + localStorage.getItem("role")+" ) "}
       <Sidebar.Items className="mt-10">
         <Sidebar.ItemGroup>
           <Sidebar.Item
@@ -17,7 +18,6 @@ function DefaultSidebar() {
           <Sidebar.Item
             href="/tickets"
             icon={HiTicket}
-            label="10"
             labelColor="dark"
           >
             <p>
@@ -25,44 +25,22 @@ function DefaultSidebar() {
             </p>
           </Sidebar.Item>
           <Sidebar.Item
-            href="#"
-            icon={HiTicket}
-            label="3"
-          >
-            <p>
-              Inbox
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiUser}
-          >
-            <p>
-              Users
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
-            icon={HiShoppingBag}
-          >
-            <p>
-              Products
-            </p>
-          </Sidebar.Item>
-          <Sidebar.Item
-            href="#"
+          href="/faqs"
             icon={HiArrowSmRight}
+            labelColor="dark"
           >
             <p>
-              Sign In
+              FAQ's
             </p>
           </Sidebar.Item>
           <Sidebar.Item
-            href="#"
-            icon={HiTable}
+          href="/"
+          
+            icon={HiUser}
+            labelColor="dark"
           >
             <p>
-              Sign Up
+              Sign Out
             </p>
           </Sidebar.Item>
         </Sidebar.ItemGroup>

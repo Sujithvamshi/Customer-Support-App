@@ -46,8 +46,8 @@ function Tickets({tickets}) {
                 <Dropdown inline label="">
                     <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
                     href={"/tickets/"+ticket.id}>View Ticket</a>
-                    {role=="USER" &&  <button name={ticket.id} className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
-                    onClick={(e)=>{deleteTicket(e)}}>Delete</button>}
+                    {role=="USER" &&  <a name={ticket.id} className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                    onClick={(e)=>{deleteTicket(e)}}>Delete</a>}
                 </Dropdown>
             </div>
             <div className="flex flex-col items-center">

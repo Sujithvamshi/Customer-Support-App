@@ -29,12 +29,6 @@ public class SupportTicketController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTicket);
     }
 
-    @GetMapping("/{id}/{accountId}")
-    public ResponseEntity<List<SupportTicket>> getSupportTicketsByAccountID(@PathVariable String accountId) {
-        List<SupportTicket> supportTickets = supportTicketRepository.findByAccountId(accountId);
-        return ResponseEntity.ok(supportTickets);
-    }
-
     @PutMapping("/{id}")
     public SupportTicket updateTicket(@PathVariable Long id, @RequestBody SupportTicket supportTicket) {
         supportTicket.setId(id);
@@ -45,11 +39,15 @@ public class SupportTicketController {
         return supportTicketRepository.findById(id);
     }
     @GetMapping
-    public ResponseEntity<List<SupportTicket>> getTicketsByStatus(@RequestParam(name = "status", required = false) String status) {
+    public ResponseEntity<List<SupportTicket>> getTicketsByStatus(@RequestParam(name = "status", required = false) String status,@RequestParam(name = "accountId", required = false) String accountId) {
         List<SupportTicket> filteredTickets;
 
-        if (status != null) {
+        if(status!=null && accountId!=null){
+            filteredTickets = supportTicketRepository.findByStatusAndAccountId(status,accountId);
+        }else if (status != null) {
             filteredTickets = supportTicketRepository.findByStatus(status);
+        } else if (accountId!=null) {
+            filteredTickets = supportTicketRepository.findByAccountId(accountId);
         } else {
             filteredTickets = supportTicketRepository.findAll();
         }
