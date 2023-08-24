@@ -215,7 +215,7 @@ function TicketView() {
                 </div>
             </div>}
             {role==="USER" && ticketData.comment!=null && ticketData.comment.length > 0 && <div><label htmlFor="about" className="block text-sm font-normal leading-6 text-gray-900">Comment</label>
-            <p className="mt-1 text-lg leading-6 text-gray-600" name="status" >{ticketData.comment}</p></div>
+            <p className="mt-1 text-lg leading-6 text-gray-600" name="status" >{ticketData.employeeComment}</p></div>
             }
         </div>
         </div>   

@@ -17,7 +17,7 @@ public class SupportTicket {
     private String status;
     private String subject;
     private String description;
-    private String comment;
-
+    private String employeeComment;
+    private String customerComment;
 }
 
