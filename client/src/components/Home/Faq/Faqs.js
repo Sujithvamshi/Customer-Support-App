@@ -36,6 +36,10 @@ function Faqs() {
       if(response.status===200){
         setReload(!reload)
         console.log("FAQ Created")
+        setNewFaq({
+          question:"",
+          answer:""
+      })
       }
       else{
         console.log("Error Retriving FAQ's")

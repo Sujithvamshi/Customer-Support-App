@@ -20,17 +20,24 @@ function CustomerRegister() {
         });
       };
 
-    const handleCustomerSubmit = async (e) => {
+      const handleCustomerSubmit = (e)=>{
         e.preventDefault();
         if(passwordCopy !== customerForm.password){
             toast("Password Does Not Match")
             return
         }
+        for (const key in customerForm) {
+            if (customerForm.hasOwnProperty(key) && !customerForm[key]) {
+                toast(key.toUpperCase() +" field required")
+                return
+            }
+        }
         UnAuthApi.post("/register/customer",customerForm).then((response) => {
             if(response.status === 200){
-              navigate('/');
+                toast('Customer created successfully')
+                navigate('/');
           } else {
-            toast('!Invalid Credantials')
+            toast(response.data)
           }
         })
         .catch((error)=>{
@@ -46,6 +53,7 @@ function CustomerRegister() {
             <input
               type="text" className="border-0  border-b p-1 w-full mb-4"
               name='accountId'
+              required
               value={customerForm.accountId}
               onChange={(e) => handleCustomerFormChange(e)}
             />
@@ -53,6 +61,7 @@ function CustomerRegister() {
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='name'
+              required
               value={customerForm.name}
               onChange={(e) => handleCustomerFormChange(e)}
             />
@@ -60,20 +69,23 @@ function CustomerRegister() {
             <input
               type="email" className="border-0  border-b p-1 w-full"
               name='email'
+              required
               value={customerForm.email}
               onChange={(e) => handleCustomerFormChange(e)}
             />
             <label className="block font-normal mb-1">Contact Details</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
-              name='text'
+              name='contactDetails'
+              required
               value={customerForm.contactDetails}
               onChange={(e) => handleCustomerFormChange(e)}
             />
             <label className="block font-normal mb-1">Address</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
-              name='text'
+              name='address'
+              required
               value={customerForm.address}
               onChange={(e) => handleCustomerFormChange(e)}
             />
@@ -81,6 +93,7 @@ function CustomerRegister() {
             <input
               type="password" className="border-0  border-b p-1 w-full"
               name='password'
+              required
               value={customerForm.password}
               onChange={(e) => handleCustomerFormChange(e)}
             />
@@ -88,6 +101,7 @@ function CustomerRegister() {
             <input
               type="password" className="border-0  border-b p-1 w-full"
               value={passwordCopy}
+              required
               onChange={(e) => setPasswordCopy(e.target.value)}
             />
             <button type='submit' onClick={(e)=>{handleCustomerSubmit(e)}} className=" mt-1 items-center rounded-lg bg-maroon b-700 px-10 py-2 text-center text-base font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">

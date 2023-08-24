@@ -40,7 +40,7 @@ function Tickets({tickets}) {
             ticket.subject = (ticket.subject.length > 30) ? ticket.subject.substring(0,29)+".....":ticket.subject
             ticket.description = (ticket.description.length > 100) ? ticket.description.substring(0,100)+".....":ticket.description
             return(
-        <Card className="mx-5 my-2.5 max-w-md ">
+        <Card className="mx-5 my-2.5 max-w-md overflow-clip">
             <div className="flex justify-between">
                 <Badge color={badges[ticket.status]}>{ticket.status}</Badge>
                 <Dropdown inline label="">

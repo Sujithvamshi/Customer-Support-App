@@ -11,7 +11,7 @@ function TicketView() {
     const location = useLocation()
     const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
     const navigate = useNavigate()
-    const [ticketData,setTicketData] = useState({})
+    const [ticketData,setTicketData] = useState({status:"Open"})
     const [newTicketData,setNewTicketData]=useState({
         subject:"",
         description:"",
@@ -51,15 +51,27 @@ function TicketView() {
           [e.target.name]: e.target.value
         });
 };
+const handleNotResolvedChange = (e) => {
+  setTicketData({
+    ...ticketData,
+    [e.target.id]: e.target.name
+  });
+  handleTicketSubmit(e)
+};
+const handleResolvedChange = (e) => {
+  ticketData.status = "Resolved"
+  handleTicketSubmit(e);
+};
           const handleTicketSubmit = async (e) => {
             e.preventDefault();
             setLoading(true)
-            AuthApi.put("/tickets/"+id,ticketData).then((response) => {
+            await AuthApi.put("/tickets/"+id,ticketData).then((response) => {
+              console.log(ticketData)
                 if(response.status === 200){
                   setLoading(false)
                   toast("Successully Updated Ticket")
                   navigate('/tickets');
-                  navigate(0)
+                  navigate(0);
               } else {
                 setLoading(false)
                 toast('!Invalid Credantials')
@@ -166,26 +178,24 @@ function TicketView() {
         )
     }else{
   return (
-  <form className="max-w-lg"  onSubmit={(e)=>{handleTicketSubmit(e)}}>
+  <form className="w-full"  onSubmit={(e)=>{handleTicketSubmit(e)}}>
     <Toast />
     {loading && <Loading />}
     <div className="flex justify-center al">
-    <div className="my-10 text-center text-3xl font-bold text-gray-900">
+    <div className="my-3 text-center text-3xl font-bold text-gray-900">
         Customer Support Ticket </div>
-        <Badge className=" mx-3 my-10 text-center text-2xl font-bold text-gray-900" color={badges.status}>#{id}</Badge>
+        <Badge className=" mx-3 my-3 text-center text-2xl font-bold text-gray-900" color={badges.status}>#{id}</Badge>
     </div>
     <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-            <label htmlFor="subject" className="block text-sm font-normal leading-6 text-gray-900">
-                Subject</label>
-            <h2 className="text-xl font-semibold leading-7 text-gray-900">{ticketData.subject}</h2>
-            <label htmlFor="Description" className="block text-sm mt-4 font-normal leading-6 text-gray-900">
-                Description</label>
-            <p className="mt-1 text-lg leading-6 text-gray-600">{ticketData.description}.</p>
-            <div className="sm:col-span-3 mt-5">
-            <p>Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
+          <p className="text-lg">Subject:</p>
+          <h2 className="text-xl font-semibold text-gray-900">{ticketData.subject}</h2>
+          <p className="mt-5 text-lg">Description:</p>
+          <p className="text-gray-600">{ticketData.description}.</p>
+            <p className="mt-5 text-lg">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
+            <div className="sm:col-span-3">
                 {role==="ADMIN" && <div>
-                    <label htmlFor="status" className="block mt-3 text-sm font-normal leading-6 text-gray-900">Update Status </label>
+                    <p className=" mt-5 text-lg">Update Status </p>
                     <div className="mt-2">
                         <select
                         id="country"
@@ -202,20 +212,35 @@ function TicketView() {
                         </select>
                     </div>
                     <div className="mt-2 col-span-full">
-                    <label htmlFor="about" className="block text-sm font-normal leading-6 text-gray-900">Comment</label>
+                    <p htmlFor="about" className="mt-5 text-lg">Comment</p>
                     <div className="mt-2">
                         <textarea
                         id="about"
-                        name="comment"
+                        name="employeeComment"
                         rows={3}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        value={ticketData.comment}
+                        value={ticketData.employeeComment}
                         onChange={(e)=>{handleTicketChange(e)}}/>
                     </div>
                 </div>
             </div>}
-            {role==="USER" && ticketData.comment!=null && ticketData.comment.length > 0 && <div><label htmlFor="about" className="block text-sm font-normal leading-6 text-gray-900">Comment</label>
-            <p className="mt-1 text-lg leading-6 text-gray-600" name="status" >{ticketData.employeeComment}</p></div>
+            {role==="USER" && ticketData.employeeComment!=null && ticketData.employeeComment.length > 0 && <div><p className=" mt-5 text-lg">Employee Comment:</p>
+            <p className="text-lg text-gray-600" name="employeeComment" >{ticketData.employeeComment}</p></div>
+            }
+            {role==="USER" && ticketData.status==="Waiting For Customer" && 
+            <div><p className=" mt-5 text-lg">Comment:</p>
+                    <div className="mt-2">
+                        <textarea
+                        id="about"
+                        name="customerComment"
+                        rows={3}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        value={ticketData.customerComment}
+                        onChange={(e)=>{handleTicketChange(e)}}/>
+                    </div></div>
+            }
+            {role==="ADMIN" && ticketData.customerComment!=null && ticketData.customerComment.length > 0 && <div><p>Customer Comment</p>
+            <p className=" mt-5 text-lg text-gray-600" name="customerComment" >{ticketData.customerComment}</p></div>
             }
         </div>
         </div>   
@@ -231,13 +256,28 @@ function TicketView() {
         >
           Update
         </button>}
+        {role==="USER" && ticketData.status === "Waiting For Customer" && <a
+        onClick={(e)=>{ticketData.status = "Resolved";handleTicketSubmit(e);}}
+          type="submit"
+          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Resolved
+        </a>}
+        {role==="USER" && ticketData.status === "Waiting For Customer" && <a
+        onClick={(e)=>{ticketData.status = "Open";handleTicketSubmit(e);}}
+          type="submit"
+          className="rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
+        >
+          Not Resolved
+        </a>}
         {role==="USER" && <button 
         onClick={(e)=>{deleteTicket(e)}}
-          type="Delete"
+          type="button"
           className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
         >
           Delete
         </button>}
+        
       </div>
     </form>
   )

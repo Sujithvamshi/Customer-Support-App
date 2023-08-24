@@ -27,11 +27,18 @@ function EmployeeRegister() {
         toast("Password Does Not Match")
         return
     }
+    for (const key in employeeForm) {
+        if (employeeForm.hasOwnProperty(key) && !employeeForm[key]) {
+            toast(key.toUpperCase() +" field required")
+            return
+        }
+    }
     UnAuthApi.post("/register/employee",employeeForm).then((response) => {
         if(response.status === 200){
-          navigate('/');
+            toast('Employee created successfully')
+            navigate('/');
       } else {
-        toast('!Invalid Credantials')
+        toast(response.data)
       }
     })
     .catch((error)=>{
@@ -46,8 +53,8 @@ function EmployeeRegister() {
             <label className="block font-normal mb-1">Employee ID</label>
             <input
               type="text" className="border-0  border-b p-1 w-full mb-4"
-              name='accountId'
-              value={employeeForm.accountId}
+              name='employeeId'
+              value={employeeForm.employeeId}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
             <label className="block font-normal mb-1">Name</label>
@@ -67,14 +74,14 @@ function EmployeeRegister() {
             <label className="block font-normal mb-1">Contact Details</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
-              name='text'
+              name='contactDetails'
               value={employeeForm.contactDetails}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
             <label className="block font-normal mb-1">Branch Location</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
-              name='text'
+              name='branchLocation'
               value={employeeForm.branchLocation}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
