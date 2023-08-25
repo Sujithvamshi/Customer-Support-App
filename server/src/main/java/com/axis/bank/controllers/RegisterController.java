@@ -11,6 +11,7 @@ import com.axis.bank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.Text;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
@@ -46,6 +47,11 @@ public class RegisterController {
         return "Customer saved successfully and User also Created";
     }
 
+    @PostMapping("/forgot-password/{email}")
+    public String forgotPassword(@PathVariable String email){
+        System.out.println("You forgot password.."+ email);
+        return email;
+    }
     @PostMapping("/employee")
     public String employeeRegister(@RequestBody Employee employee) {
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));

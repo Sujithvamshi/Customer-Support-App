@@ -1,16 +1,23 @@
 package com.axis.bank.controllers;
 
+import com.axis.bank.entities.Feedback;
 import com.axis.bank.repositories.CustomerRepository;
+import com.axis.bank.repositories.FeedbackRepository;
+import com.axis.bank.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 import com.axis.bank.entities.SupportTicket;
 import com.axis.bank.repositories.SupportTicketRepository;
+
+import javax.persistence.EntityNotFoundException;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -20,12 +27,21 @@ public class SupportTicketController {
     private SupportTicketRepository supportTicketRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private FeedbackRepository feedbackRepository;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private CustomerService customerService;
     @PostMapping
     public ResponseEntity<SupportTicket> createSupportTicket(@RequestBody SupportTicket supportTicket) {
         supportTicket.setStatus("Open");
+        supportTicket.setTimestamp(new Timestamp(Calendar.getInstance().getTime().getTime()));
         SupportTicket createdTicket = supportTicketRepository.save(supportTicket);
+        Feedback feedback = new Feedback();
+        createdTicket.setFeedback(feedback);
+        feedbackRepository.save(feedback);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTicket);
     }
 
@@ -53,9 +69,12 @@ public class SupportTicketController {
         }
         return ResponseEntity.ok(filteredTickets);
     }
-
-    @DeleteMapping("/{id}")
     public void deleteTicket(@PathVariable Long id) {
+        // Load the SupportTicket entity
+        SupportTicket supportTicket = supportTicketRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("SupportTicket not found"));
+        feedbackRepository.deleteById(supportTicket.getFeedback().getId());
+        // Delete the SupportTicket record
         supportTicketRepository.deleteById(id);
     }
 }

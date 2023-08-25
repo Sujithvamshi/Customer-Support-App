@@ -12,7 +12,8 @@ function EmployeeRegister() {
     email:"",
     contactDetails:"",
     branchLocation:"",
-    password:""
+    password:"",
+    level:""
   })
   const handleEmployeeFormChange = (e) => {
     setEmployeeForm({
@@ -85,6 +86,18 @@ function EmployeeRegister() {
               value={employeeForm.branchLocation}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
+            <label className="block font-normal mb-1">Level</label>
+            <select
+              id="level"
+              name="level"
+              autoComplete="level"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              value={employeeForm.level}
+              onChange={(e)=>{handleEmployeeFormChange(e)}}>
+              <option>L1</option>
+              <option>L2</option>
+              <option>L3</option>
+            </select>
             <label className="block font-normal mb-1">Password</label>
             <input
               type="password" className="border-0  border-b p-1 w-full"

@@ -19,8 +19,10 @@ public class Employee {
 
     @Column(unique=true)
     private String email;
+
     private String name;
     private String contactDetails;
     private String branchLocation;
     private String password;
+    private String level;
 }

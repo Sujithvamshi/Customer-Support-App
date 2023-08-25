@@ -6,7 +6,6 @@ import EmployeeRegister from './EmployeeRegister';
 import LoginPage from './LoginPage';
 function Login() {
   const location = useLocation();
-  localStorage.clear()
     return (
       <div className="fixed w-screen h-screen">
         <a href='/'><img
@@ -14,7 +13,7 @@ function Login() {
             className="mx-5 my-5 h-6 sm:h-9"
             src="https://brandpalettes.com/wp-content/uploads/2021/12/Axis-Bank-Logo-768x209.png"
           /></a>
-        <div className="sm:flex sm:p-20 sm:justify-around" >
+        <div className="sm:flex p-20 sm:justify-around" >
           <div className="w-2/5">
             <Slideshow />
           </div>

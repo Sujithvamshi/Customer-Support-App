@@ -54,11 +54,6 @@ public class AuthController {
             throw new BadCredentialsException(" Invalid Username or Password  !!");
         }
     }
-    @ExceptionHandler(BadCredentialsException.class)
-    public String exceptionHandler() {
-        return "Credentials Invalid !!";
-    }
-
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public String duplicateUserHandler(){ return "User already exists !!"; }
 

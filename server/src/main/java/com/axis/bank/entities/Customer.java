@@ -18,6 +18,8 @@ public class Customer {
     private String accountId;
     private String name;
     private String contactDetails;
+
+    @Column(unique = true)
     private String email;
     private String address;
     private String password;

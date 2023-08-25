@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.axis.bank.entities.Feedback;
 import com.axis.bank.repositories.FeedbackRepository;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/feedback")
 public class FeedbackController {
