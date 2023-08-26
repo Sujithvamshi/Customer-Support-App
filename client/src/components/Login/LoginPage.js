@@ -1,4 +1,4 @@
-import React,{ useState }  from 'react'
+import React,{ useEffect, useState }  from 'react'
 import { useNavigate } from 'react-router-dom';
 import { UnAuthApi } from '../common/Apis';
 import { toast } from '../common/StylingConstants';
@@ -10,7 +10,9 @@ function LoginPage() {
     username:"",
     password:""
   })
-  localStorage.clear()
+  useEffect(()=>{
+    localStorage.clear()
+  },[])
    const handleUserFormChange = (e) => {
     setUserForm({
       ...userForm,

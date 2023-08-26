@@ -12,6 +12,7 @@ function TicketView() {
     const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
     const navigate = useNavigate()
     const [ticketData,setTicketData] = useState({status:"Open"})
+    const [feedback,setFeedback] = useState({});
     const [newTicketData,setNewTicketData]=useState({
         subject:"",
         description:"",
@@ -33,11 +34,32 @@ function TicketView() {
         AuthApi.get("/tickets/"+id).then((response)=>{
             if(response.status===200){
                 setTicketData(response.data)
+                setFeedback(response.data.feedback)
             }
             else{
-                console.log("Ticket Not Found")
+              navigate('/dashboard')
+              console.log("Ticket Not Found")
+              toast("Ticket Not Found. Please Enter Correct Ticket ID.")
             }
-        }).catch((e)=>{console.log(e)})}
+        }).catch((e)=>{
+          navigate('/dashboard')
+          console.log(e)
+          toast("Ticket Not Found. Please Enter Correct Ticket ID.")
+        })}
+        const handleFeedbackSubmit = (id) => {
+          AuthApi.get("/feedback/"+id).then((response)=>{
+              if(response.status===200){
+                  setFeedback(response.data)
+              }
+              else{
+                console.log("Feedback Not Found")
+                toast("Feedback Not Found. Please Enter Correct Ticket ID.")
+              }
+          }).catch((e)=>{
+            console.log(e)
+            toast("Feedback Not Found. Please Enter Correct Ticket ID.")
+          })}
+  
 
         const handleTicketChange = (e) => {
             setTicketData({
@@ -50,17 +72,6 @@ function TicketView() {
           ...newTicketData,
           [e.target.name]: e.target.value
         });
-};
-const handleNotResolvedChange = (e) => {
-  setTicketData({
-    ...ticketData,
-    [e.target.id]: e.target.name
-  });
-  handleTicketSubmit(e)
-};
-const handleResolvedChange = (e) => {
-  ticketData.status = "Resolved"
-  handleTicketSubmit(e);
 };
           const handleTicketSubmit = async (e) => {
             e.preventDefault();
@@ -169,7 +180,7 @@ const handleResolvedChange = (e) => {
                     <button
                     onClick={(e)=>{handleNewTicketSubmit(e)}}
                     type="submit"
-                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="rounded-md bg-maroon px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                     Create Ticket
                     </button>
@@ -193,6 +204,8 @@ const handleResolvedChange = (e) => {
           <p className="mt-5 text-lg">Description:</p>
           <p className="text-gray-600">{ticketData.description}.</p>
             <p className="mt-5 text-lg">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
+            <p>
+            </p>
             <div className="sm:col-span-3">
                 {role==="ADMIN" && <div>
                     <p className=" mt-5 text-lg">Update Status </p>
@@ -252,7 +265,7 @@ const handleResolvedChange = (e) => {
         {role==="ADMIN" && <button
         onClick={(e)=>{handleTicketSubmit(e)}}
           type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="rounded-md bg-maroon px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Update
         </button>}

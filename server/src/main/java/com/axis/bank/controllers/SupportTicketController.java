@@ -51,8 +51,10 @@ public class SupportTicketController {
         return supportTicketRepository.save(supportTicket);
     }
     @GetMapping("/{id}")
-    public Optional<SupportTicket> getTicket(@PathVariable Long id) {
-        return supportTicketRepository.findById(id);
+    public ResponseEntity<SupportTicket> getTicket(@PathVariable Long id) {
+        SupportTicket supportTicket =  supportTicketRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("SupportTicket not found"));
+        return ResponseEntity.ok(supportTicket);
     }
     @GetMapping
     public ResponseEntity<List<SupportTicket>> getTicketsByStatus(@RequestParam(name = "status", required = false) String status,@RequestParam(name = "accountId", required = false) String accountId) {

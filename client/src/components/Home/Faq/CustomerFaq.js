@@ -37,19 +37,19 @@ function CustomerFaq() {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
-        <button onClick={(e)=>{navigate("/tickets/"+searchText)}} className="inline-flex mt-5 ml-2 mb-20 items-center rounded-lg bg-maroon px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+        <button onClick={(e)=>{e.preventDefault();navigate("/tickets/"+searchText)}} className="inline-flex mt-5 ml-2 mb-20 items-center rounded-lg bg-maroon px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
         Search</button>
         </form>
       <h1 className="mb-10 text-center text-2xl font-bold text-gray-900">
       Freqently Asked Questions (FAQ's)</h1>
     {faqData.map((faq)=>
-      <div className="flex justify-center">
+      <div className="flex justify-center text-left">
       <Accordion collapseAll className="w-3/4">
       <Accordion.Panel className="w-full">
-      <Accordion.Title>
-      {faq.question}
+      <Accordion.Title className="text-black">
+          {faq.question}
       </Accordion.Title>
-      <Accordion.Content>
+      <Accordion.Content className="text-gray-900">
           {faq.answer}
       </Accordion.Content>
       </Accordion.Panel>

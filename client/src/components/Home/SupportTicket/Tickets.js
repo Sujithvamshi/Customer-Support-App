@@ -43,6 +43,7 @@ function Tickets({tickets}) {
         <Card className="mx-5 my-2.5 max-w-md overflow-clip">
             <div className="flex justify-between">
                 <Badge color={badges[ticket.status]}>{ticket.status}</Badge>
+                <p className="text-xs">{ticket.timestamp}</p>
                 <Dropdown inline label="">
                     <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
                     href={"/tickets/"+ticket.id}>View Ticket</a>
@@ -66,6 +67,10 @@ function Tickets({tickets}) {
                 {role==="USER" && ticket.status==="Waiting For Customer" && <div className="mt-4 flex space-x-3 lg:mt-6">
                     <button onClick={(e) => {setId(ticket.id)}} className="inline-flex items-center rounded-lg bg-indigo-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                         Update Status</button>
+                </div>}
+                {role === "USER" && ticket.status === "Resolved" && <div className="mt-4 flex space-x-3 lg:mt-6">
+                    <button onClick={(e) => {setId(ticket.id)}} className="inline-flex items-center rounded-lg bg-indigo-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                        Give Feedback</button>
                 </div>}
             </div>
         </Card>

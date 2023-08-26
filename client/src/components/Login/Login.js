@@ -7,12 +7,15 @@ import LoginPage from './LoginPage';
 function Login() {
   const location = useLocation();
     return (
-      <div className="fixed w-screen h-screen">
-        <a href='/'><img
-            alt="Axis Bank"
-            className="mx-5 my-5 h-6 sm:h-9"
-            src="https://brandpalettes.com/wp-content/uploads/2021/12/Axis-Bank-Logo-768x209.png"
-          /></a>
+      <div>
+        <div className="bg-maroon py-2">
+          <a href='/'><img
+              alt="Axis Bank"
+              className="mx-5 my-2 h-6 sm:h-9 bg-mar"
+              // src="https://brandpalettes.com/wp-content/uploads/2021/12/Axis-Bank-Logo-768x209.png"
+              src="https://www.axisbank.com/assets/images/logo-white.png"
+            /></a>
+        </div>
         <div className="sm:flex p-20 sm:justify-around" >
           <div className="w-2/5">
             <Slideshow />
