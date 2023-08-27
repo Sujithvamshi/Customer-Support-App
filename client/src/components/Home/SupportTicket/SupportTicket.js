@@ -2,19 +2,14 @@ import Tickets from "./Tickets";
 import { useState,useEffect,useRef } from "react";
 import { AuthApi } from "../../common/Apis";
 import { toast } from "../../common/StylingConstants";
-import Toast from "../../common/Toast";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TicketView from "./TicketView";
-import { Button, Tabs } from 'flowbite-react';
-import { HiAdjustments, HiClipboardList, HiUserCircle } from 'react-icons/hi';
-import { MdDashboard } from 'react-icons/md';
+import { Tabs } from 'flowbite-react';
 import { statuses } from "../../common/Constants";
 export default function SupportTicket() {
     const [tickets,setTickets] = useState([]);
     const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
-    const Fetching = useRef(false)
     const location = useLocation()
-    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("All");
     useEffect(()=>{
         getTicketData()
@@ -42,7 +37,6 @@ export default function SupportTicket() {
   if(location.pathname==="/tickets"){
   return (
       <div className="px-10">
-          <Toast />
           <h1 className="my-10 text-2xl font-bold text-gray-900">
           Support Tickets</h1>
       <Tabs.Group className="w-full"

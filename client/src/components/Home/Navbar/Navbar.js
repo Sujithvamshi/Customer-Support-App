@@ -1,5 +1,5 @@
 import { Dropdown, Navbar,Avatar} from 'flowbite-react';
-import {HiUser} from "react-icons/hi";
+import {HiUserCircle} from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
 export default function NavbarWithDropdown() {
   const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
@@ -19,7 +19,7 @@ export default function NavbarWithDropdown() {
       <div className="flex md:order-2">
         <Dropdown
           inline
-          label={<Avatar className="bg-white rounded-full p-2" alt="User settings" img={HiUser}/>}
+          label={<Avatar alt="User settings" img={HiUserCircle}/>}
         >
           <Dropdown.Header>
             <span className="block text-sm">

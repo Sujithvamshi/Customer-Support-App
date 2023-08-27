@@ -5,6 +5,7 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import SupportTicket from './SupportTicket/SupportTicket';
 import Faqs from './Faq/Faqs';
 import { toast } from '../common/StylingConstants';
+import FooterWithSocialMediaIcons from '../common/DefaultFooter';
 function Dashboard() {
   const [loggedIn,setLoggedIn] = useState(false);
   const location = useLocation()
@@ -14,18 +15,21 @@ function Dashboard() {
       setLoggedIn(true)
     }
     else{
-      navigate('/')
-      toast("Please Login")
+      navigate('/login')
     }
   },[])
   return (
     <div>
     {loggedIn && <div>
       <NavbarWithDropdown />
+      <div className="w-screen h-screen overflow-scroll">
       {location.pathname==="/dashboard" && <CustomerFaq />}
       {location.pathname.includes("/tickets") && <SupportTicket />}
       {location.pathname=="/faqs" && <Faqs />}
+      </div>
     </div>}
+    
+    <FooterWithSocialMediaIcons />
     </div>
   )
 }

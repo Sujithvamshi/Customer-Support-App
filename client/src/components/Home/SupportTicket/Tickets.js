@@ -7,11 +7,10 @@ function Tickets({tickets}) {
     const navigate = useNavigate();
     const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
     useEffect(()=>{
-        handleProceed();
+        if(id){
+            navigate(generatePath("/tickets/:id", { id }))
+        }
     },[id])
-    const handleProceed = () => {
-        id && navigate(generatePath("/tickets/:id", { id }));
-      };
     const badges = {
         "Open":"failure",
         "In Progress":"default",

@@ -59,7 +59,7 @@ function LoginPage() {
               value={userForm.password}
               onChange={(e) => handleUserFormChange(e)}
             />
-            <p className=" mt-3 font-normal">Forgot Password? <a className="font-medium text-maroon" href="/register">Reset Here</a></p>
+            <p className=" mt-3 font-normal">Forgot Password? <a className="font-medium text-maroon" href="/forgot-password">Reset Here</a></p>
             <button type='submit' onClick={(e)=>{handleUserSubmit(e)}} className=" mt-1 items-center rounded-lg bg-maroon b-700 px-10 py-2 text-center text-base font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
               Login</button>
             <p className=" mt-5 font-normal">First Time User? <a className="font-medium text-maroon" href="/register/customer">Register Here</a></p>

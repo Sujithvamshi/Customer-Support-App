@@ -17,7 +17,10 @@ public class SupportTicket {
     private String accountId;
     private String status;
     private String subject;
+
+    @Column(length = 2000)
     private String description;
+    
     private String employeeComment;
     private String customerComment;
     private String level;

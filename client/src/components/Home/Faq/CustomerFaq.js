@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Accordion } from 'flowbite-react';
-import { ChevronUpIcon } from '@heroicons/react/20/solid'
 import { AuthApi } from '../../common/Apis';
 import { toast } from '../../common/StylingConstants';
-import Toast from '../../common/Toast';
 import { useNavigate } from 'react-router-dom';
 
 function CustomerFaq() {

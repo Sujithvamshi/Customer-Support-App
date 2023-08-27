@@ -3,7 +3,6 @@ import { useNavigate, useParams,useLocation } from 'react-router-dom'
 import { AuthApi } from '../../common/Apis';
 import { Badge } from 'flowbite-react';
 import { toast } from '../../common/StylingConstants';
-import Toast from '../../common/Toast';
 import Loading from '../../common/Loading';
 function TicketView() {
     const {id} = useParams();
@@ -132,7 +131,6 @@ function TicketView() {
     if(location.pathname.includes("new")){
         return(
             <form className="max-w-lg"  onSubmit={(e)=>{handleNewTicketSubmit(e)}}>
-            <Toast />
             {loading && <Loading />}
             <div className="flex justify-center al">
                 <div className="my-10 text-center text-3xl font-bold text-gray-900">
@@ -190,7 +188,6 @@ function TicketView() {
     }else{
   return (
   <form className="w-full"  onSubmit={(e)=>{handleTicketSubmit(e)}}>
-    <Toast />
     {loading && <Loading />}
     <div className="flex justify-center al">
     <div className="my-3 text-center text-3xl font-bold text-gray-900">
