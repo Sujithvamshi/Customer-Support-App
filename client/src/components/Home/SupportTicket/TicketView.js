@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams,useLocation } from 'react-router-dom'
-import { AuthApi } from '../../common/Apis';
-import { Badge } from 'flowbite-react';
+import { AuthApi,MlApi } from '../../common/Apis';
+import { Badge ,Rating} from 'flowbite-react';
 import { toast } from '../../common/StylingConstants';
 import Loading from '../../common/Loading';
 function TicketView() {
@@ -15,6 +15,7 @@ function TicketView() {
     const [newTicketData,setNewTicketData]=useState({
         subject:"",
         description:"",
+        level:"",
         accountId:localStorage.getItem("username")
     })
     const badges = {
@@ -23,6 +24,21 @@ function TicketView() {
         "Waiting For Customer":"warning",
         "Resolved":"purple",
         "Closed":"success"
+    }
+    const level_mapping={
+      "Credit reporting, repair, or other":"L3",
+      "Debt collection":"L3",
+      "Consumer Loan":"L2",
+      "Credit card or prepaid card":"L3",
+      "Mortgage":"L2",
+      "Vehicle loan or lease":"L2",
+      "Student loan":"L2",
+      "Payday loan, title loan, or personal loan":"L2",
+      "Checking or savings account":"L1",
+      "Bank account or service":"L1",
+      "Money transfer, virtual currency, or money service":"L1",
+      "Money transfers":"L1",
+      "Other financial service":"L3"
     }
     useEffect(()=>{
         if(!location.pathname.includes("new")){
@@ -45,10 +61,17 @@ function TicketView() {
           console.log(e)
           toast("Ticket Not Found. Please Enter Correct Ticket ID.")
         })}
-        const handleFeedbackSubmit = (id) => {
-          AuthApi.get("/feedback/"+id).then((response)=>{
+  
+        const handleFeedbackSubmit = (e) => {
+          e.preventDefault();
+          AuthApi.put("/feedback/"+feedback.id,feedback).then((response)=>{
               if(response.status===200){
-                  setFeedback(response.data)
+                  toast("Successully Updated Feedback")
+                  getTicketData()
+                  ticketData.status = "Closed"
+                  handleTicketSubmit(e)
+                  navigate('/tickets');
+                  navigate(0);
               }
               else{
                 console.log("Feedback Not Found")
@@ -66,6 +89,12 @@ function TicketView() {
               [e.target.name]: e.target.value
             });
     };
+    const handleFeedbackChanges = (e) => {
+      setFeedback({
+        ...feedback,
+        [e.target.name]: e.target.value
+      });
+};
     const handleNewTicketChange = (e) => {
         setNewTicketData({
           ...newTicketData,
@@ -96,12 +125,50 @@ function TicketView() {
           const handleNewTicketSubmit = async (e) => {
             e.preventDefault();
             setLoading(true)
-            AuthApi.post("/tickets",newTicketData).then((response) => {
+            MlApi.post("/ticket-classification",{
+              complaint : newTicketData.description
+            }).then(response=>{
+              newTicketData.level = level_mapping[response.data]
+              AuthApi.post("/tickets",newTicketData).then((response) => {
                 if(response.status < 205){
                   setLoading(false)
-                  toast("Successully Updated Ticket")
+                  AuthApi.get("/register/"+newTicketData.accountId).then((response1) => {
+                    if(response1.status === 200){
+                        AuthApi.post("/email",{
+                            recipient:response1.data,
+                            subject:"OTP - Forgot Password Axis Bank",
+                            msgBody:`Dear ${response.accountId},
+
+                            We hope this message finds you well. This email is to confirm that your recent complaint has been successfully registered with [Bank Name]. We take your concerns seriously and are committed to addressing them promptly.
+                            Here are the details of your complaint:
+                            Complaint Reference Number: ${response.id}
+                            Date of Complaint: ${response.timestamp}
+                            Description of Complaint: ${response.subject}
+                            Our dedicated team is already reviewing your case, and we will work diligently to resolve the matter in a timely manner. You can expect further communication from us as we make progress.
+                            Please feel free to reach out to our Customer Support team at 1860 419 5555 if you have any additional questions or require further assistance.
+                            We appreciate your trust in Axis Bank and thank you for bringing this matter to our attention. Your satisfaction is our priority, and we will do our best to ensure a satisfactory resolution.
+                            
+                            Thank you for being a valued customer.` 
+                        }).catch((error)=>{
+                            console.error('Error:', error);
+                            toast('An error occurred while logging in. Please try again later.');
+                            setLoading(false)
+                        });
+                  } else {
+                    toast("ID not found")
+                    setLoading(false)
+                  }
+                })
+                .catch((error)=>{
+                      console.error('Error:', error);
+                      toast('An error occurred while logging in. Please try again later.');
+                      setLoading(false)
+        
+                  });
                   navigate('/tickets');
                   navigate(0)
+                  setLoading(false)
+                  toast("Successully Updated Ticket")
               } else {
                 setLoading(false)
                 toast('!Invalid Credantials')
@@ -112,7 +179,7 @@ function TicketView() {
                   console.error('Error:', error);
                   toast('An error occurred while logging in. Please try again later.');
               });
-          }
+          })};
           const deleteTicket = async (e) => {
             e.preventDefault();
             AuthApi.delete("/tickets/"+ id).then((response) => {
@@ -200,9 +267,28 @@ function TicketView() {
           <h2 className="text-xl font-semibold text-gray-900">{ticketData.subject}</h2>
           <p className="mt-5 text-lg">Description:</p>
           <p className="text-gray-600">{ticketData.description}.</p>
-            <p className="mt-5 text-lg">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
-            <p>
-            </p>
+          <p className="mt-5 text-lg">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
+         {ticketData.status=="Resolved" && role=="USER" && <div>
+            <form onSubmit={(e)=>{handleFeedbackSubmit(e)}}>
+            <p className="mt-5 text-lg">Feedback: </p>
+            <Rating>
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star />
+              <Rating.Star filled={false}/>
+            </Rating>
+            <input
+                    type="text"
+                    className="border rounded p-1 w-1/2 mb-2"
+                    name='content'
+                    value={feedback.content}
+                    onChange={(e) => handleFeedbackChanges(e)}
+                  />
+              <button onClick={(e)=>{handleFeedbackSubmit(e)}} className="inline-flex mt-5 ml-2 mb-20 items-center rounded-lg bg-maroon px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+              Submit Feedback</button>
+              </form>
+          </div>}
             <div className="sm:col-span-3">
                 {role==="ADMIN" && <div>
                     <p className=" mt-5 text-lg">Update Status </p>

@@ -71,11 +71,12 @@ public class SupportTicketController {
         }
         return ResponseEntity.ok(filteredTickets);
     }
+    @DeleteMapping("{id}")
     public void deleteTicket(@PathVariable Long id) {
         // Load the SupportTicket entity
         SupportTicket supportTicket = supportTicketRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("SupportTicket not found"));
-        feedbackRepository.deleteById(supportTicket.getFeedback().getId());
+//        feedbackRepository.deleteById(supportTicket.getFeedback().getId());
         // Delete the SupportTicket record
         supportTicketRepository.deleteById(id);
     }
