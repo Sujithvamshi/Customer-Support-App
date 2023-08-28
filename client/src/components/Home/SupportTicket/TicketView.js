@@ -136,20 +136,30 @@ function TicketView() {
                     if(response1.status === 200){
                         AuthApi.post("/email",{
                             recipient:response1.data,
-                            subject:"OTP - Forgot Password Axis Bank",
-                            msgBody:`Dear ${response.accountId},
-
+                            subject:`Ticket Raised Axis Bank - ${response.data.subject}`,
+                            msgBody:`Dear ${response.data.accountId},
                             We hope this message finds you well. This email is to confirm that your recent complaint has been successfully registered with [Bank Name]. We take your concerns seriously and are committed to addressing them promptly.
+
                             Here are the details of your complaint:
-                            Complaint Reference Number: ${response.id}
-                            Date of Complaint: ${response.timestamp}
-                            Description of Complaint: ${response.subject}
+
+                            Complaint Reference Number: ${response.data.id}
+
+                            Date of Complaint: ${response.data.timestamp}
+
+                            Description of Complaint: ${response.data.subject}
+
                             Our dedicated team is already reviewing your case, and we will work diligently to resolve the matter in a timely manner. You can expect further communication from us as we make progress.
                             Please feel free to reach out to our Customer Support team at 1860 419 5555 if you have any additional questions or require further assistance.
                             We appreciate your trust in Axis Bank and thank you for bringing this matter to our attention. Your satisfaction is our priority, and we will do our best to ensure a satisfactory resolution.
                             
                             Thank you for being a valued customer.` 
-                        }).catch((error)=>{
+                        }).then((ans)=>{
+                          toast("Successully Raised Ticket")
+                          navigate('/tickets');
+                          navigate(0)
+                          setLoading(false)
+                        })
+                        .catch((error)=>{
                             console.error('Error:', error);
                             toast('An error occurred while logging in. Please try again later.');
                             setLoading(false)
@@ -165,10 +175,6 @@ function TicketView() {
                       setLoading(false)
         
                   });
-                  navigate('/tickets');
-                  navigate(0)
-                  setLoading(false)
-                  toast("Successully Updated Ticket")
               } else {
                 setLoading(false)
                 toast('!Invalid Credantials')
