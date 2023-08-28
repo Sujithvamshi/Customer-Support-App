@@ -9,12 +9,15 @@ import com.axis.bank.repositories.EmployeeRepository;
 import com.axis.bank.repositories.RoleRepository;
 import com.axis.bank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Text;
 
+import javax.persistence.EntityNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -47,11 +50,6 @@ public class RegisterController {
         return "Customer saved successfully and User also Created";
     }
 
-    @PostMapping("/forgot-password/{email}")
-    public String forgotPassword(@PathVariable String email){
-        System.out.println("You forgot password.."+ email);
-        return email;
-    }
     @PostMapping("/employee")
     public String employeeRegister(@RequestBody Employee employee) {
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
@@ -65,6 +63,42 @@ public class RegisterController {
         userRepository.save(user);
         employeeRepository.save(employee);
         return "Employee saved successfully and User also Created";
+    }
+    @GetMapping("/{username}")
+    public String getUser(@PathVariable String username) {
+            Customer customer = customerRepository.findByAccountId(username).orElseThrow(() -> new RuntimeException("Customer Not found"));
+            if (customer != null) {
+                return customer.getEmail();
+            }
+
+            Employee employee = employeeRepository.findByEmployeeId(username)
+                    .orElseThrow(() -> new RuntimeException("Employee Not found"));
+            if (employee != null) {
+                return employee.getEmail();
+            }
+            return "User not found";
+    }
+    @PutMapping("/forgot")
+    public String updateUser(@RequestBody User user) {
+        user.setId(userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new RuntimeException("Customer Not found")).getId());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Customer customer = customerRepository.findByAccountId(user.getUsername()).orElseThrow(() -> new RuntimeException("Customer Not found"));
+        if (customer != null) {
+            customer.setPassword(user.getPassword());
+            userRepository.save(user);
+            customerRepository.save(customer);
+            return "Password Updated";
+        }
+
+        Employee employee = employeeRepository.findByEmployeeId(user.getUsername()).orElseThrow(() -> new RuntimeException("Customer Not found"));;
+        if (employee != null) {
+            employee.setPassword(user.getPassword());
+            userRepository.save(user);
+            employeeRepository.save(employee);
+            return "Password Updated";
+        }
+        return "Not updated";
     }
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public String duplicateUserHandler(){ return "User already exists !!"; }
