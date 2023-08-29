@@ -7,6 +7,8 @@ public interface SupportTicketRepository extends JpaRepository<SupportTicket, Lo
     List<SupportTicket> findByAccountId(String accountId);
     List<SupportTicket> findByStatus(String status);
 
+    List<SupportTicket> findByLevel(String level);
+    List<SupportTicket> findByStatusAndLevel(String status,String level);
     List<SupportTicket> findByStatusAndAccountId(String status,String accountId);
 }
 

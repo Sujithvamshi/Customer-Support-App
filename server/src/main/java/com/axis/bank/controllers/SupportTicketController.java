@@ -57,12 +57,18 @@ public class SupportTicketController {
         return ResponseEntity.ok(supportTicket);
     }
     @GetMapping
-    public ResponseEntity<List<SupportTicket>> getTicketsByStatus(@RequestParam(name = "status", required = false) String status,@RequestParam(name = "accountId", required = false) String accountId) {
+    public ResponseEntity<List<SupportTicket>> getTicketsByStatus(@RequestParam(name = "status", required = false) String status,@RequestParam(name = "accountId", required = false) String accountId
+    ,@RequestParam(name = "level", required = false) String level) {
         List<SupportTicket> filteredTickets;
 
         if(status!=null && accountId!=null){
             filteredTickets = supportTicketRepository.findByStatusAndAccountId(status,accountId);
-        }else if (status != null) {
+        } else if (level!=null && status!=null) {
+            filteredTickets = supportTicketRepository.findByStatusAndLevel(status,level);
+        } else if (level!=null) {
+            filteredTickets = supportTicketRepository.findByLevel(level);
+        }
+        else if (status != null) {
             filteredTickets = supportTicketRepository.findByStatus(status);
         } else if (accountId!=null) {
             filteredTickets = supportTicketRepository.findByAccountId(accountId);

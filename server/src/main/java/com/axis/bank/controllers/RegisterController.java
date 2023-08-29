@@ -80,9 +80,8 @@ public class RegisterController {
     }
     @PutMapping("/forgot")
     public String updateUser(@RequestBody User user) {
-        user.setId(userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new RuntimeException("Customer Not found")).getId());
+        user.setId(userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new RuntimeException("User Not found")).getId());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         Customer customer = customerRepository.findByAccountId(user.getUsername()).orElseThrow(() -> new RuntimeException("Customer Not found"));
         if (customer != null) {
             customer.setPassword(user.getPassword());

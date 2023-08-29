@@ -19,21 +19,33 @@ export default function SupportTicket() {
       if(activeTab!=="All"){
         queryArr.push("status="+activeTab)
       }
-      if(role==="USER"){
+      if(role==="ADMIN"){
+        AuthApi.get('/employee/'+localStorage.getItem('username')).then((response)=>{
+          if(response.status===200){
+            queryArr.push("level="+response.data.level)
+            AuthApi.get("/tickets?"+queryArr.join("&")).then((response)=>{
+              if(response.status===200){
+                setTickets(response.data)
+              }
+            }
+        )}
+          }
+      )}
+      else if(role==="USER"){
         queryArr.push("accountId="+localStorage.getItem('username'))
+        AuthApi.get("/tickets?"+queryArr.join("&"))
+        .then((response)=>{
+          if(response.status===200){
+            setTickets(response.data)
+          } else {
+            toast("Error Retriving Ticket's")
+          }
+        })
+        .catch((e)=>{
+          console.log(e)
+        })
       }
-      await AuthApi.get("/tickets?"+queryArr.join("&")).then((response)=>{
-        if(response.status===200){
-          setTickets(response.data)
-        }
-        else{
-          toast("Error Retriving Ticket's")
-        }
-      })
-    .catch((e)=>{
-      console.log(e)
-    })
-  }
+    }
   if(location.pathname==="/tickets"){
   return (
       <div className="px-10">
