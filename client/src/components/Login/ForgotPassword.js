@@ -12,7 +12,8 @@ function ForgotPassword() {
     const [password,setPassword] = useState("")
     const [otpc,setOtpc] = useState(false)
     const [otpv,setOtpv] = useState("")
-    const [otp,setOtp] = useState(generateRandomDigits())
+    const [otp,setOtp] = useState("")
+    var otp_clone = null
     const [loading,setLoading] = useState(false);
     const navigate = useNavigate()
     function hideEmail(email) {
@@ -39,11 +40,13 @@ function ForgotPassword() {
         setLoading(true)
         UnAuthApi.get("/register/"+userForm.username).then((response) => {
             if(response.status === 200){
+              otp_clone = generateRandomDigits()
+              setOtp(otp_clone)
                 UnAuthApi.post("/email",{
                     recipient:response.data,
                     subject:"OTP - Forgot Password Axis Bank",
-                    msgBody:"Your OTP for password reset is: "+otp+".\nPlease use this code to reset your password. This OTP is valid for a limited time." 
-                }).then(response=>{
+                    msgBody:"Your OTP for password reset is: "+otp_clone+".\nPlease use this code to reset your password. This OTP is valid for a limited time." 
+                }).then(response1=>{
                     toast('OTP sent to '+ hideEmail(response.data))
                     setEmailSent(true)
                     setLoading(false)

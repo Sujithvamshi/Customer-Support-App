@@ -66,13 +66,12 @@ public class RegisterController {
     }
     @GetMapping("/{username}")
     public String getUser(@PathVariable String username) {
-            Customer customer = customerRepository.findByAccountId(username).orElseThrow(() -> new RuntimeException("Customer Not found"));
+            Customer customer = customerRepository.findByAccountId(username).orElse(null);
             if (customer != null) {
                 return customer.getEmail();
             }
 
-            Employee employee = employeeRepository.findByEmployeeId(username)
-                    .orElseThrow(() -> new RuntimeException("Employee Not found"));
+            Employee employee = employeeRepository.findByEmployeeId(username).orElse(null);
             if (employee != null) {
                 return employee.getEmail();
             }
@@ -85,6 +84,8 @@ public class RegisterController {
         Customer customer = customerRepository.findByAccountId(user.getUsername()).orElseThrow(() -> new RuntimeException("Customer Not found"));
         if (customer != null) {
             customer.setPassword(user.getPassword());
+            Role role = roleRepository.findByName("USER").orElseThrow(()->new RuntimeException("Role Not Found"));
+            user.setRoles(new HashSet<Role>(){{add(role);}});
             userRepository.save(user);
             customerRepository.save(customer);
             return "Password Updated";
@@ -93,6 +94,8 @@ public class RegisterController {
         Employee employee = employeeRepository.findByEmployeeId(user.getUsername()).orElseThrow(() -> new RuntimeException("Customer Not found"));;
         if (employee != null) {
             employee.setPassword(user.getPassword());
+            Role role = roleRepository.findByName("ADMIN").orElseThrow(()->new RuntimeException("Role Not Found"));
+            user.setRoles(new HashSet<Role>(){{add(role);}});
             userRepository.save(user);
             employeeRepository.save(employee);
             return "Password Updated";

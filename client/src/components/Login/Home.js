@@ -44,7 +44,7 @@ function Home() {
           </div>
           <div className="sm:flex sm:justify-around" >
             <div className="w-2/3 h-screen">
-              <Slideshow />
+              <Slideshow {...{i:0}}/>
             </div>
           </div>
           <a href="#faq"className="absolute w-10 h-10 p-1 bg-gray-300 rounded-full bottom-10 left-1/2">

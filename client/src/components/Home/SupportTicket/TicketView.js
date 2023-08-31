@@ -4,6 +4,8 @@ import { AuthApi,MlApi } from '../../common/Apis';
 import { Badge ,Rating} from 'flowbite-react';
 import { toast } from '../../common/StylingConstants';
 import Loading from '../../common/Loading';
+import ReactStars from "react-rating-stars-component";
+
 function TicketView() {
     const {id} = useParams();
     const [loading,setLoading] = useState(false)
@@ -101,6 +103,13 @@ function TicketView() {
           [e.target.name]: e.target.value
         });
 };
+const ratingChanged = (newRating) => {
+  console.log(newRating)
+  setFeedback({
+    ...feedback,
+    ["rating"]: newRating
+  });
+};
           const handleTicketSubmit = async (e) => {
             e.preventDefault();
             setLoading(true)
@@ -137,22 +146,7 @@ function TicketView() {
                         AuthApi.post("/email",{
                             recipient:response1.data,
                             subject:`Ticket Raised Axis Bank - ${response.data.subject}`,
-                            msgBody:`Dear ${response.data.accountId},
-                            We hope this message finds you well. This email is to confirm that your recent complaint has been successfully registered with [Bank Name]. We take your concerns seriously and are committed to addressing them promptly.
-
-                            Here are the details of your complaint:
-
-                            Complaint Reference Number: ${response.data.id}
-
-                            Date of Complaint: ${response.data.timestamp}
-
-                            Description of Complaint: ${response.data.subject}
-
-                            Our dedicated team is already reviewing your case, and we will work diligently to resolve the matter in a timely manner. You can expect further communication from us as we make progress.
-                            Please feel free to reach out to our Customer Support team at 1860 419 5555 if you have any additional questions or require further assistance.
-                            We appreciate your trust in Axis Bank and thank you for bringing this matter to our attention. Your satisfaction is our priority, and we will do our best to ensure a satisfactory resolution.
-                            
-                            Thank you for being a valued customer.` 
+                            msgBody:`Dear ${response.data.accountId},\nWe hope this message finds you well. This email is to confirm that your recent complaint has been successfully registered with Axis Bank. We take your concerns seriously and are committed to addressing them promptly.\n\nHere are the details of your complaint:\n\nComplaint Reference Number: ${response.data.id}\n\nDate of Complaint: ${response.data.timestamp}\n\nDescription of Complaint: ${response.data.subject}\n\nOur dedicated team is already reviewing your case, and we will work diligently to resolve the matter in a timely manner. You can expect further communication from us as we make progress.\nPlease feel free to reach out to our Customer Support team at 1860 419 5555 if you have any additional questions or require further assistance.\nWe appreciate your trust in Axis Bank and thank you for bringing this matter to our attention. Your satisfaction is our priority, and we will do our best to ensure a satisfactory resolution.\nThank you for being a valued customer.` 
                         }).then((ans)=>{
                           toast("Successully Raised Ticket")
                           navigate('/tickets');
@@ -277,13 +271,15 @@ function TicketView() {
          {ticketData.status=="Resolved" && role=="USER" && <div>
             <form onSubmit={(e)=>{handleFeedbackSubmit(e)}}>
             <p className="mt-5 text-lg">Feedback: </p>
-            <Rating>
-              <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
-              <Rating.Star />
-              <Rating.Star filled={false}/>
-            </Rating>
+            <ReactStars
+              count={5}
+              onChange={ratingChanged}
+              size={40}
+              value={feedback.rating}
+              emptyIcon={<i className="far fa-star"></i>}
+              fullIcon={<i className="fa fa-star"></i>}
+              activeColor="#ffd700"
+            />
             <input
                     type="text"
                     className="border rounded p-1 w-1/2 mb-2"

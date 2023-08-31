@@ -4,7 +4,7 @@ import NavbarWithDropdown from './Navbar/Navbar';
 import { useLocation,useNavigate } from 'react-router-dom';
 import SupportTicket from './SupportTicket/SupportTicket';
 import Faqs from './Faq/Faqs';
-import { toast } from '../common/StylingConstants';
+import UpdateProfile from '../Home/Navbar/UpdateProfile';
 import FooterWithSocialMediaIcons from '../common/DefaultFooter';
 function Dashboard() {
   const [loggedIn,setLoggedIn] = useState(false);
@@ -26,6 +26,7 @@ function Dashboard() {
       {location.pathname==="/dashboard" && <CustomerFaq />}
       {location.pathname.includes("/tickets") && <SupportTicket />}
       {location.pathname=="/faqs" && <Faqs />}
+      {location.pathname === "/update-profile" && <UpdateProfile/>}
       </div>
     </div>}
     

@@ -14,11 +14,19 @@ import javax.persistence.EntityNotFoundException;
 @RequestMapping("/api/customer")
 public class CustomerController {
     @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
     private CustomerService customerService;
     @GetMapping("/{accountId}")
     public ResponseEntity<Customer> getCustomerByAccountId(@PathVariable String accountId) {
         Customer customer = customerService.getCustomerByAccountId(accountId);
         return ResponseEntity.ok(customer);
+    }
+    @PutMapping
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
+        Customer customer1 = customerService.getCustomerByAccountId(customer.getAccountId());
+        customer.setId(customer1.getId());
+        return ResponseEntity.ok(customerRepository.save(customer));
     }
     @ExceptionHandler(EntityNotFoundException.class)
     public String entityNotFound(){return "Customer Does Not Exits.."; }

@@ -79,11 +79,9 @@ public class SupportTicketController {
     }
     @DeleteMapping("{id}")
     public void deleteTicket(@PathVariable Long id) {
-        // Load the SupportTicket entity
         SupportTicket supportTicket = supportTicketRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("SupportTicket not found"));
-//        feedbackRepository.deleteById(supportTicket.getFeedback().getId());
-        // Delete the SupportTicket record
+        feedbackRepository.deleteById(supportTicket.getFeedback().getId());
         supportTicketRepository.deleteById(id);
     }
 }

@@ -24,14 +24,17 @@ function Login() {
                          Employee Register</button>}
               {location.pathname.includes("employee") && <button onClick={(e) => {navigate("/register/customer")}} className="rounded-lg bg-white m-2 px-4 py-1 mr-10 text-center font-medium text-maroon hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                          Customer Register</button>}
-              <button onClick={(e) => {navigate("/login")}} className="rounded-lg bg-white m-2 px-4 py-1 mr-10 text-center font-medium text-maroon hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                          Login</button>
+              {location.pathname!="/login" && <button onClick={(e) => {navigate("/login")}} className="rounded-lg bg-white m-2 px-4 py-1 mr-10 text-center font-medium text-maroon hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                          Login</button>}
+              {location.pathname=="/login" && <button onClick={(e) => {navigate("/register/customer")}} className="rounded-lg bg-white m-2 px-4 py-1 mr-10 text-center font-medium text-maroon hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+              Register</button>}
             </div>
         </div>
-        <div className="sm:flex p-20 sm:justify-around" >
-          <div className="w-2/5">
-            <Slideshow />
+        <div className="sm:flex p-20 sm:justify-between" >
+          <div className=" absolute w-2/4 h-3/4">
+            <Slideshow {...{i:1}}/>
           </div>
+          <span></span>
           {location.pathname === "/login" && <LoginPage /> }
           {location.pathname === "/forgot-password" && <ForgotPassword/>}
           {location.pathname === "/register/customer" && <CustomerRegister/>}

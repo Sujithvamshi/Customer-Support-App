@@ -42,7 +42,7 @@ function LoginPage() {
       });
   }
   return (
-        <form className="w-3/4 sm:w-2/6 " onSubmit={(e)=>{handleUserSubmit(e)}}>
+        <form className="w-3/4 sm:w-2/6 h-screen" onSubmit={(e)=>{handleUserSubmit(e)}}>
             {loading && <Loading />}
             <label className="block font-bold text-lg text-center mb-5">Welcome to Login Page</label>
             <label className="block font-normal mt2-1">Username</label>

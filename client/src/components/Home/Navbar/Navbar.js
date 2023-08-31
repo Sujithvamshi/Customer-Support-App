@@ -29,6 +29,10 @@ export default function NavbarWithDropdown() {
               {role}
             </span>
           </Dropdown.Header>
+          <Dropdown.Item href="/update-profile">
+            Update Profile
+          </Dropdown.Item>
+          <Dropdown.Divider/>
           <Dropdown.Item href="/" className="text-red-700 hover:text-red-900">
             Sign out
           </Dropdown.Item>
