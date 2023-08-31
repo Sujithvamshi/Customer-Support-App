@@ -79,28 +79,31 @@ public class RegisterController {
     }
     @PutMapping("/forgot")
     public String updateUser(@RequestBody User user) {
-        user.setId(userRepository.findByUsername(user.getUsername()).orElseThrow(() -> new RuntimeException("User Not found")).getId());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Customer customer = customerRepository.findByAccountId(user.getUsername()).orElseThrow(() -> new RuntimeException("Customer Not found"));
-        if (customer != null) {
-            customer.setPassword(user.getPassword());
-            Role role = roleRepository.findByName("USER").orElseThrow(()->new RuntimeException("Role Not Found"));
-            user.setRoles(new HashSet<Role>(){{add(role);}});
-            userRepository.save(user);
-            customerRepository.save(customer);
-            return "Password Updated";
-        }
+        User user1 = userRepository.findByUsername(user.getUsername()).orElse(null);
+        if(user1 != null){
+            user.setId(user1.getId());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            Customer customer = customerRepository.findByAccountId(user.getUsername()).orElse(null);
+            if (customer != null) {
+                customer.setPassword(user.getPassword());
+                Role role = roleRepository.findByName("USER").orElseThrow(()->new RuntimeException("Role Not Found"));
+                user.setRoles(new HashSet<Role>(){{add(role);}});
+                userRepository.save(user);
+                customerRepository.save(customer);
+                return "Password Updated";
+            }
 
-        Employee employee = employeeRepository.findByEmployeeId(user.getUsername()).orElseThrow(() -> new RuntimeException("Customer Not found"));;
-        if (employee != null) {
-            employee.setPassword(user.getPassword());
-            Role role = roleRepository.findByName("ADMIN").orElseThrow(()->new RuntimeException("Role Not Found"));
-            user.setRoles(new HashSet<Role>(){{add(role);}});
-            userRepository.save(user);
-            employeeRepository.save(employee);
-            return "Password Updated";
+            Employee employee = employeeRepository.findByEmployeeId(user.getUsername()).orElse(null);
+            if (employee != null) {
+                employee.setPassword(user.getPassword());
+                Role role = roleRepository.findByName("ADMIN").orElseThrow(()->new RuntimeException("Role Not Found"));
+                user.setRoles(new HashSet<Role>(){{add(role);}});
+                userRepository.save(user);
+                employeeRepository.save(employee);
+                return "Password Updated";
+            }
         }
-        return "Not updated";
+        return "Not updated or User not found";
     }
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public String duplicateUserHandler(){ return "User already exists !!"; }

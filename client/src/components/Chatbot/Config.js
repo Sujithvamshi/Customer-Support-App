@@ -1,6 +1,5 @@
 // in config.js
 import { createChatBotMessage,createCustomMessage,createClientMessage } from 'react-chatbot-kit';
-import Overview from './Overview';
 const botName = 'AHA';
 
 const config = {
