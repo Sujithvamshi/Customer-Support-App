@@ -27,21 +27,6 @@ function TicketView() {
         "Resolved":"purple",
         "Closed":"success"
     }
-    const level_mapping={
-      "Credit reporting, repair, or other":"L3",
-      "Debt collection":"L3",
-      "Consumer Loan":"L2",
-      "Credit card or prepaid card":"L3",
-      "Mortgage":"L2",
-      "Vehicle loan or lease":"L2",
-      "Student loan":"L2",
-      "Payday loan, title loan, or personal loan":"L2",
-      "Checking or savings account":"L1",
-      "Bank account or service":"L1",
-      "Money transfer, virtual currency, or money service":"L1",
-      "Money transfers":"L1",
-      "Other financial service":"L3"
-    }
     useEffect(()=>{
         if(!location.pathname.includes("new")){
             getTicketData()
@@ -135,18 +120,25 @@ const ratingChanged = (newRating) => {
             e.preventDefault();
             setLoading(true)
             MlApi.post("/ticket-classification",{
-              complaint : newTicketData.description
+              complaint : newTicketData.subject+" "+newTicketData.description
             }).then(response=>{
-              newTicketData.level = level_mapping[response.data]
+              newTicketData.level = response.data.assigned_level
               AuthApi.post("/tickets",newTicketData).then((response) => {
                 if(response.status < 205){
                   setLoading(false)
                   AuthApi.get("/register/"+newTicketData.accountId).then((response1) => {
                     if(response1.status === 200){
+                      let time = "2"
+                      if(response.data.level == "L2"){
+                        time = "4"
+                      }
+                      else if(response.data.level == "L3"){
+                        time="24"
+                      }
                         AuthApi.post("/email",{
                             recipient:response1.data,
                             subject:`Ticket Raised Axis Bank - ${response.data.subject}`,
-                            msgBody:`Dear ${response.data.accountId},\nWe hope this message finds you well. This email is to confirm that your recent complaint has been successfully registered with Axis Bank. We take your concerns seriously and are committed to addressing them promptly.\n\nHere are the details of your complaint:\n\nComplaint Reference Number: ${response.data.id}\n\nDate of Complaint: ${response.data.timestamp}\n\nDescription of Complaint: ${response.data.subject}\n\nOur dedicated team is already reviewing your case, and we will work diligently to resolve the matter in a timely manner. You can expect further communication from us as we make progress.\nPlease feel free to reach out to our Customer Support team at 1860 419 5555 if you have any additional questions or require further assistance.\nWe appreciate your trust in Axis Bank and thank you for bringing this matter to our attention. Your satisfaction is our priority, and we will do our best to ensure a satisfactory resolution.\nThank you for being a valued customer.` 
+                            msgBody:`Dear ${response.data.accountId},\nWe hope this message finds you well. This email is to confirm that your recent complaint has been successfully registered with Axis Bank. We take your concerns seriously and are committed to addressing them promptly.\n\nHere are the details of your complaint:\n\nComplaint Reference Number: ${response.data.id}\n\nAssigned Ticket to ${response.data.level} Engineer\n\nETA: ${time} Hours\n\nDescription of Complaint: ${response.data.subject}\n\nOur dedicated team is already reviewing your case, and we will work diligently to resolve the matter in a timely manner. You can expect further communication from us as we make progress.\nPlease feel free to reach out to our Customer Support team at 1860 419 5555 if you have any additional questions or require further assistance.\nWe appreciate your trust in Axis Bank and thank you for bringing this matter to our attention. Your satisfaction is our priority, and we will do our best to ensure a satisfactory resolution.\nThank you for being a valued customer.` 
                         }).then((ans)=>{
                           toast("Successully Raised Ticket")
                           navigate('/tickets');
@@ -208,7 +200,7 @@ const ratingChanged = (newRating) => {
                 <h2 className="text-base font-semibold leading-7 text-gray-900">Raise New Support Ticket</h2>            
 
                 <div className="sm:col-span-4">
-                <label htmlFor="subject" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="subject" className="block text-lg font-medium leading-6 text-gray-900">
                     Subject
                 </label>
                 <div className="mt-2">
@@ -223,7 +215,7 @@ const ratingChanged = (newRating) => {
                 </div>
             </div>
             <div className="mt-2 col-span-full">
-              <label htmlFor="description" className="block text-sm font-normal leading-6 text-gray-900">
+              <label htmlFor="description" className="block text-lg font-normal leading-6 text-gray-900">
                 Description
               </label>
               <div className="mt-2">

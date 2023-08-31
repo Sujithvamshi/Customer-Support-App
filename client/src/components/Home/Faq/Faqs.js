@@ -94,7 +94,7 @@ const deleteFaq = async (id) => {
             <Accordion collapseAll className="w-3/4">
             <Accordion.Panel className="w-full">
             <Accordion.Title>
-            {faq.question}
+                {faq.question}
             </Accordion.Title>
             <Accordion.Content>
                 {faq.answer}

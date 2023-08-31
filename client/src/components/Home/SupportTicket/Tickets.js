@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card,Dropdown,Badge } from 'flowbite-react'
 import { useNavigate,generatePath } from 'react-router-dom';
 import { AuthApi } from '../../common/Apis';
+import { Rating } from 'flowbite-react';
 function Tickets({tickets}) {
     const [id,setId] = useState(false);
     const navigate = useNavigate();
@@ -40,9 +41,17 @@ function Tickets({tickets}) {
             ticket.description = (ticket.description.length > 100) ? ticket.description.substring(0,100)+".....":ticket.description
             return(
         <Card className="mx-5 my-2.5 max-w-md overflow-clip">
-            <div className="flex justify-between">
+            <div className="flex justify-between ">
                 <Badge color={badges[ticket.status]}>{ticket.status}</Badge>
-                <p className="text-xs">{ticket.timestamp}</p>
+                <p className="text-xs">{ticket.level}</p>
+                {ticket.status == "Closed" && <Rating>
+                {Array(ticket.feedback.rating).fill(1).map((el, i) =>
+                    <Rating.Star />
+                )}
+                {Array(5-ticket.feedback.rating).fill(1).map((el, i) =>
+                    <Rating.Star filled={false}/>
+                )}
+                </Rating>}
                 <Dropdown inline label="">
                     <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
                     href={"/tickets/"+ticket.id}>View Ticket</a>
@@ -68,7 +77,7 @@ function Tickets({tickets}) {
                         Update Status</button>
                 </div>}
                 {role === "USER" && ticket.status === "Resolved" && <div className="mt-4 flex space-x-3 lg:mt-6">
-                    <button onClick={(e) => {setId(ticket.id)}} className="inline-flex items-center rounded-lg bg-indigo-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                    <button onClick={(e) => {setId(ticket.id)}} className="inline-flex items-center rounded-lg bg-maroon px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                         Give Feedback</button>
                 </div>}
             </div>
