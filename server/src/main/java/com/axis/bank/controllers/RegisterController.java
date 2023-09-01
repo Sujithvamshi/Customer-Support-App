@@ -36,8 +36,8 @@ public class RegisterController {
 
     @PostMapping("/customer")
     public String customerRegister(@RequestBody Customer customer) {
-        System.out.println(customer);
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        customerRepository.save(customer);
         Role roles = roleRepository.findByName("USER").orElseThrow(() -> new RuntimeException("User Not Found!!"));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roles);
@@ -46,7 +46,6 @@ public class RegisterController {
         user.setPassword(customer.getPassword());
         user.setRoles(roleSet);
         userRepository.save(user);
-        customerRepository.save(customer);
         return "Customer saved successfully and User also Created";
     }
 
