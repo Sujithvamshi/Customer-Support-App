@@ -28,7 +28,7 @@ function Home() {
 }
   return (
       <div>
-        <div className="w-screen h-screen">
+        <div className="w-screen">
           <div className="fixed  z-10 w-screen bg-maroon py-2 flex justify-between">
             <a href='/'><img
                 alt="Axis Bank"
@@ -43,8 +43,9 @@ function Home() {
                           Login</button>
             </div>
           </div>
-          <div className="sm:flex sm:justify-around" >
-            <div className="w-2/3 h-screen">
+          <div className="sm:flex p-5 sm:justify-around" >
+            <div className="w-screen mt-20 flex">
+              <img className="w-1/2 pr-5" src='https://s7ap1.scene7.com/is/image/Targetaxisbank/HNI_Aug23_Deskto_750x400?fit=constrain&hei=400&wid=750'></img>
               <Slideshow {...{i:0}}/>
             </div>
           </div>
@@ -52,7 +53,7 @@ function Home() {
             <ChevronDownIcon/>
           </a>
         </div>
-        <h1 id='faq' className="mb-10 text-center text-2xl font-bold text-gray-900">
+        <h1 id='faq' className="m-10 text-center text-2xl font-bold text-gray-900">
         Freqently Asked Questions (FAQ's)</h1>
       {faqData.map((faq)=>
         <div className="flex justify-center text-left">

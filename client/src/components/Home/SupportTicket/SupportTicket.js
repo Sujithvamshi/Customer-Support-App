@@ -89,7 +89,7 @@ export default function SupportTicket() {
   )
 } else {
   return(
-    <div className="px-20 py-10">
+    <div className="px-20 py-10 ">
     <TicketView />
     </div>
   )
