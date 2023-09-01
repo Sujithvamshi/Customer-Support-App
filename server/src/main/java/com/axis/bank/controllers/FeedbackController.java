@@ -11,7 +11,7 @@ import com.axis.bank.repositories.FeedbackRepository;
 
 import javax.persistence.EntityNotFoundException;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @RequestMapping("/api/feedback")
 public class FeedbackController {

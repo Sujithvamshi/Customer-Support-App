@@ -28,7 +28,7 @@ with open('pickles/classifier.pkl', 'rb') as classifier_file:
         classifier = pickle.load(classifier_file)
 
 @app.route("/ticket-classification", methods=['POST'])
-@cross_origin(origins="http://localhost:3000")
+@cross_origin(origins="http://localhost:3001")
 def predict_complaint():
     data = request.json
     complaint = data['complaint']
