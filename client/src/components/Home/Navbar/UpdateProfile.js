@@ -82,7 +82,7 @@ function UpdateProfile() {
             return
         }
     }
-    AuthApi.put("/api/customer",customerForm).then((response) => {
+    AuthApi.put("/customer",customerForm).then((response) => {
         if(response.status === 200){
             toast('Customer Updated successfully')
             navigate("/dashboard");
