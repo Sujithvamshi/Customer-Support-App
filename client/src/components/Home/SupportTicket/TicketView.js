@@ -189,7 +189,7 @@ const ratingChanged = (newRating) => {
           }
     if(location.pathname.includes("new")){
         return(
-            <form className="max-w-lg"  onSubmit={(e)=>{handleNewTicketSubmit(e)}}>
+            <form className="w-full"  onSubmit={(e)=>{handleNewTicketSubmit(e)}}>
             {loading && <Loading />}
             <div className="flex justify-center al">
                 <div className="my-10 text-center text-3xl font-bold text-gray-900">
@@ -197,7 +197,7 @@ const ratingChanged = (newRating) => {
                     <Badge className=" mx-3 my-10 text-center text-2xl font-bold text-gray-900" color={badges.status}>#{id}</Badge>
                 </div>
                 <div className="border-b border-gray-900/10 pb-12">
-                <h2 className="text-base font-semibold leading-7 text-gray-900">Raise New Support Ticket</h2>            
+                <h2 className=" text-2xl mb-3 font-semibold leading-7 text-gray-900">Raise New Support Ticket</h2>            
 
                 <div className="sm:col-span-4">
                 <label htmlFor="subject" className="block text-lg font-medium leading-6 text-gray-900">
@@ -215,7 +215,7 @@ const ratingChanged = (newRating) => {
                 </div>
             </div>
             <div className="mt-2 col-span-full">
-              <label htmlFor="description" className="block text-lg font-normal leading-6 text-gray-900">
+              <label htmlFor="description" className="block text-lg font-medium leading-6 text-gray-900">
                 Description
               </label>
               <div className="mt-2">
@@ -258,7 +258,7 @@ const ratingChanged = (newRating) => {
           <p className="text-lg">Subject:</p>
           <h2 className="text-xl font-semibold text-gray-900">{ticketData.subject}</h2>
           <p className="mt-5 text-lg">Description:</p>
-          <p className="text-gray-600">{ticketData.description}.</p>
+          <p className="text-gray-900">{ticketData.description}.</p>
           <p className="mt-5 text-lg">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
          {ticketData.status=="Resolved" && role=="USER" && <div>
             <form onSubmit={(e)=>{handleFeedbackSubmit(e)}}>

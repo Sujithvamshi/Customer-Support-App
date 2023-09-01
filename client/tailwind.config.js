@@ -7,7 +7,8 @@ module.exports = {
   ],
   theme: {
     colors:{
-      'maroon':'#97144d'
+      'maroon':'#97144d',
+      'maroon-light':'#b8306b'
     },
     extend: {},
   },

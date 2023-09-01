@@ -6,6 +6,7 @@ import EmployeeRegister from './EmployeeRegister';
 import LoginPage from './LoginPage';
 import { useNavigate } from 'react-router-dom';
 import ForgotPassword from './ForgotPassword';
+import appUseImg from "../../assets/appuseimg.png"
 function Login() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,15 +31,18 @@ function Login() {
               Register</button>}
             </div>
         </div>
-        <div className="sm:flex p-20 sm:justify-between" >
-          <div className=" absolute w-2/4 h-3/4">
-            <Slideshow {...{i:1}}/>
+        <div>
+          <div className="sm:flex p-20 sm:justify-between" >
+            <div className=" absolute top-24 left-20 w-2/6 h-2/4">
+              <Slideshow {...{i:1}}/>
+            </div>
+            <span></span>
+            {location.pathname === "/login" && <LoginPage /> }
+            {location.pathname === "/forgot-password" && <ForgotPassword/>}
+            {location.pathname === "/register/customer" && <CustomerRegister/>}
+            {location.pathname === "/register/employee" && <EmployeeRegister/>}
           </div>
-          <span></span>
-          {location.pathname === "/login" && <LoginPage /> }
-          {location.pathname === "/forgot-password" && <ForgotPassword/>}
-          {location.pathname === "/register/customer" && <CustomerRegister/>}
-          {location.pathname === "/register/employee" && <EmployeeRegister/>}
+          <img className="absolute top-2/3" src={appUseImg}></img>
         </div>
       </div>
     )

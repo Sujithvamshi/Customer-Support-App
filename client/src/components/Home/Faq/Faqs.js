@@ -87,7 +87,7 @@ const deleteFaq = async (id) => {
               onChange={(e) => handleFaqChange(e)}
             />
         </div>
-        <button onClick={(e)=>{addFaq(e)}} className="inline-flex mt-5 mb-20 items-center rounded-lg bg-indigo-700 px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+        <button onClick={(e)=>{addFaq(e)}} className="inline-flex mt-5 mb-20 items-center rounded-lg bg-maroon px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
         Add</button>
             {faqData.map((faq)=>
             <div className="flex justify-center">
