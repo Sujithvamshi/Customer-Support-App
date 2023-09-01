@@ -81,8 +81,8 @@ public class SupportTicketController {
     public void deleteTicket(@PathVariable Long id) {
         SupportTicket supportTicket = supportTicketRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("SupportTicket not found"));
-        feedbackRepository.deleteById(supportTicket.getFeedback().getId());
         supportTicketRepository.deleteById(id);
+        feedbackRepository.deleteById(supportTicket.getFeedback().getId());
     }
 }
 
