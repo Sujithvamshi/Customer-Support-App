@@ -10,6 +10,7 @@ function Home() {
     const navigate = useNavigate()
     const [faqData,setFaqData] = useState([]);
     useEffect(()=>{
+      localStorage.clear()
       getFaqData()
   },[])
   const getFaqData = async () => {
