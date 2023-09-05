@@ -49,44 +49,44 @@ function EmployeeRegister() {
   }
   return (
         <form className="w-3/4 sm:w-2/6 " onSubmit={(e)=>{handleEmployeeSubmit(e)}}>
-            <label className="block font-bold text-lg text-center mb-5">Welcome to Employee Registration Page</label>
-            <p className=" mt-3 font-normal">Are You a Customer? <a className="font-medium text-maroon" href="/register/customer">Register Here</a></p>
-            <label className="block font-normal mb-1">Employee ID</label>
+            <label className="block font-bold text-xl text-maroon text-center mb-5">Welcome to Employee Registration Page</label>
+            <p className=" mt-3 font-bold">Are You a Customer? <a className="font-medium text-maroon" href="/register/customer">Register Here</a></p>
+            <label className="block font-bold text-l text-maroon mb-1">Employee ID</label>
             <input
               type="text" className="border-0  border-b p-1 w-full mb-4"
               name='employeeId'
               value={employeeForm.employeeId}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Name</label>
+            <label className="block font-bold text-l text-maroon mb-1">Name</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='name'
               value={employeeForm.name}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Email</label>
+            <label className="block font-bold text-l text-maroon mb-1">Email</label>
             <input
               type="email" className="border-0  border-b p-1 w-full"
               name='email'
               value={employeeForm.email}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Contact Details</label>
+            <label className="block font-bold text-l text-maroon mb-1">Contact Details</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='contactDetails'
               value={employeeForm.contactDetails}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Branch Location</label>
+            <label className="block font-bold text-l text-maroon mb-1">Branch Location</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='branchLocation'
               value={employeeForm.branchLocation}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Level</label>
+            <label className="block font-bold text-l text-maroon mb-1">Level</label>
             <select
               id="level"
               name="level"
@@ -99,20 +99,20 @@ function EmployeeRegister() {
               <option>L2</option>
               <option>L3</option>
             </select>
-            <label className="block font-normal mb-1">Password</label>
+            <label className="block font-bold text-l text-maroon mb-1">Password</label>
             <input
               type="password" className="border-0  border-b p-1 w-full"
               name='password'
               value={employeeForm.password}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Confirm Password</label>
+            <label className="block font-bold text-l text-maroon mb-1">Confirm Password</label>
             <input
               type="password" className="border-0  border-b p-1 w-full"
               value={passwordCopy}
               onChange={(e) => setPasswordCopy(e.target.value)}
             />
-            <button type='submit' onClick={(e)=>{handleEmployeeSubmit(e)}} className=" mt-1 items-center rounded-lg bg-maroon b-700 px-10 py-2 text-center text-base font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+            <button type='submit' onClick={(e)=>{handleEmployeeSubmit(e)}} className=" mt-5 items-center rounded-lg bg-maroon b-700 px-10 py-2 text-center text-base font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
               Register</button>
           </form>
   )

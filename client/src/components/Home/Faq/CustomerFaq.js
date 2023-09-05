@@ -25,9 +25,9 @@ function CustomerFaq() {
     })
   }
   return (
-    <div className="w-full h-screen text-center px-20 pt-20 bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% ">
+    <div className="w-screen text-center px-20 pt-20 bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% ">
       <form onSubmit={(e)=>{navigate("/tickets/"+searchText)}}>
-      <label className="block font-normal mb-1">Track Complaint Ticket</label>
+      <label className="block font-bold text-2xl mb-1">Track Complaint Ticket</label>
       <input
               type="text"
               className="border rounded p-1 w-1/2 mb-2"

@@ -27,6 +27,21 @@ function TicketView() {
         "Resolved":"purple",
         "Closed":"success"
     }
+    const subjects = [
+      "Credit reporting, repair, or other",
+    "Debt collection",
+    "Consumer Loan",
+    "Credit card or prepaid card",
+    "Mortgage",
+    "Vehicle loan or lease",
+    "Student loan",
+    "Payday loan, title loan, or personal loan",
+    "Checking or savings account",
+    "Bank account or service",
+    "Money transfer, virtual currency, or money service",
+    "Money transfers",
+    "Other financial service"
+    ]
     useEffect(()=>{
         if(!location.pathname.includes("new")){
             getTicketData()
@@ -189,7 +204,7 @@ const ratingChanged = (newRating) => {
           }
     if(location.pathname.includes("new")){
         return(
-            <form className="w-full"  onSubmit={(e)=>{handleNewTicketSubmit(e)}}>
+            <form className="p-20"  onSubmit={(e)=>{handleNewTicketSubmit(e)}}>
             {loading && <Loading />}
             <div className="flex justify-center al">
                 <div className="my-10 text-center text-3xl font-bold text-gray-900">
@@ -200,22 +215,29 @@ const ratingChanged = (newRating) => {
                 <h2 className=" text-2xl mb-3 font-semibold leading-7 text-gray-900">Raise New Support Ticket</h2>            
 
                 <div className="sm:col-span-4">
-                <label htmlFor="subject" className="block text-lg font-medium leading-6 text-gray-900">
+                <label htmlFor="subject" className="block text-lg font-bold text-xl leading-6 text-gray-900">
                     Subject
                 </label>
                 <div className="mt-2">
-                    <input
-                    id="subject"
-                    name="subject"
-                    type="text"
-                    value={newTicketData.subject}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    onChange={(e)=>{handleNewTicketChange(e)}}
-                    />
+                <select
+              id="subject"
+              name="subject"
+              autoComplete="subject"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              value={newTicketData.subject}
+              defaultValue=""
+              onChange={(e)=>{handleNewTicketChange(e)}}>
+              {subjects.forEach(element => {
+               return(<option>
+                  {element}
+                </option>)
+                
+              })}
+            </select>
                 </div>
             </div>
             <div className="mt-2 col-span-full">
-              <label htmlFor="description" className="block text-lg font-medium leading-6 text-gray-900">
+              <label htmlFor="description" className="block text-lg font-bold text-xl leading-6 text-gray-900">
                 Description
               </label>
               <div className="mt-2">
@@ -246,23 +268,23 @@ const ratingChanged = (newRating) => {
         )
     }else{
   return (
-  <form className="w-full"  onSubmit={(e)=>{handleTicketSubmit(e)}}>
+  <form className="p-20"  onSubmit={(e)=>{handleTicketSubmit(e)}}>
     {loading && <Loading />}
     <div className="flex justify-center al">
-    <div className="my-3 text-center text-3xl font-bold text-gray-900">
+    <div className="my-3 text-center text-3xl font-bold ">
         Customer Support Ticket </div>
-        <Badge className=" mx-3 my-3 text-center text-2xl font-bold text-gray-900" color={badges.status}>#{id}</Badge>
+        <Badge className=" mx-3 my-3 text-center text-2xl font-bold " color={badges.status}>#{id}</Badge>
     </div>
     <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-          <p className="text-lg">Subject:</p>
-          <h2 className="text-xl font-semibold text-gray-900">{ticketData.subject}</h2>
-          <p className="mt-5 text-lg">Description:</p>
-          <p className="text-gray-900">{ticketData.description}.</p>
-          <p className="mt-5 text-lg">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
+          <p className="font-bold text-xl ">Subject:</p>
+          <h2 className="text-xl  text-black-900">{ticketData.subject}</h2>
+          <p className="mt-5 text-xl font-bold">Description:</p>
+          <p className="text-black-900 text-xl">{ticketData.description}.</p>
+          <p className="mt-5 text-xl font-bold">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
          {ticketData.status=="Resolved" && role=="USER" && <div>
             <form onSubmit={(e)=>{handleFeedbackSubmit(e)}}>
-            <p className="mt-5 text-lg">Feedback: </p>
+            <p className="mt-5 text-xl font-bold">Feedback: </p>
             <ReactStars
               count={5}
               onChange={ratingChanged}
