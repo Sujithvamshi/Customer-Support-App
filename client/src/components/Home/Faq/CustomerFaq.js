@@ -44,10 +44,10 @@ function CustomerFaq() {
       <div className="flex justify-center text-left">
       <Accordion collapseAll className="w-3/4">
       <Accordion.Panel className="w-full">
-      <Accordion.Title className="text-black">
+      <Accordion.Title className="text-black text-lg">
           {faq.question}
       </Accordion.Title>
-      <Accordion.Content className="text-gray-900">
+      <Accordion.Content className="text-gray-900 text-lg">
           {faq.answer}
       </Accordion.Content>
       </Accordion.Panel>

@@ -27,21 +27,6 @@ function TicketView() {
         "Resolved":"purple",
         "Closed":"success"
     }
-    const subjects = [
-      "Credit reporting, repair, or other",
-    "Debt collection",
-    "Consumer Loan",
-    "Credit card or prepaid card",
-    "Mortgage",
-    "Vehicle loan or lease",
-    "Student loan",
-    "Payday loan, title loan, or personal loan",
-    "Checking or savings account",
-    "Bank account or service",
-    "Money transfer, virtual currency, or money service",
-    "Money transfers",
-    "Other financial service"
-    ]
     useEffect(()=>{
         if(!location.pathname.includes("new")){
             getTicketData()
@@ -227,12 +212,20 @@ const ratingChanged = (newRating) => {
               value={newTicketData.subject}
               defaultValue=""
               onChange={(e)=>{handleNewTicketChange(e)}}>
-              {subjects.forEach(element => {
-               return(<option>
-                  {element}
-                </option>)
-                
-              })}
+              <option> </option>
+              <option>Credit reporting, repair, or other</option>
+              <option>Debt collection</option>
+              <option>Consumer Loan</option>
+              <option>Credit card or prepaid card</option>
+              <option>Mortgage</option>
+              <option>Vehicle loan or lease</option>
+              <option>Student loan</option>
+              <option>Payday loan, title loan, or personal loan</option>
+              <option>Checking or savings account</option>
+              <option>Bank account or service</option> 
+              <option>Money transfer, virtual currency, or money service </option>
+              <option>Money transfers</option>
+              <option>Other financial service</option>
             </select>
                 </div>
             </div>
@@ -307,13 +300,13 @@ const ratingChanged = (newRating) => {
           </div>}
             <div className="sm:col-span-3">
                 {role==="ADMIN" && <div>
-                    <p className=" mt-5 text-lg">Update Status </p>
+                    <p className=" mt-5 font-bold text-xl">Update Status </p>
                     <div className="mt-2">
                         <select
                         id="country"
                         name="status"
                         autoComplete="country-name"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-lg sm:leading-6"
                         value={ticketData.status}
                         onChange={(e)=>{handleTicketChange(e)}}>
                         <option>Open</option>
@@ -324,13 +317,13 @@ const ratingChanged = (newRating) => {
                         </select>
                     </div>
                     <div className="mt-2 col-span-full">
-                    <p htmlFor="about" className="mt-5 text-lg">Comment</p>
+                    <p htmlFor="about" className="mt-5 text-xl font-bold">Comment</p>
                     <div className="mt-2">
                         <textarea
                         id="about"
                         name="employeeComment"
                         rows={3}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6"
                         value={ticketData.employeeComment}
                         onChange={(e)=>{handleTicketChange(e)}}/>
                     </div>
@@ -358,13 +351,13 @@ const ratingChanged = (newRating) => {
         </div>   
     </div>
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button onClick={()=>{navigate("/tickets");navigate(0)}} type="button" className="text-sm font-semibold leading-6 text-gray-900">
+        <button onClick={()=>{navigate("/tickets");navigate(0)}} type="button" className="text-lg font-bold leading-8 text-gray-900">
           Cancel
         </button>
         {role==="ADMIN" && <button
         onClick={(e)=>{handleTicketSubmit(e)}}
           type="submit"
-          className="rounded-md bg-maroon px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="rounded-md bg-maroon px-3 py-2 text-lg font-bold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Update
         </button>}
