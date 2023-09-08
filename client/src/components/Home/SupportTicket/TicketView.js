@@ -189,7 +189,7 @@ const ratingChanged = (newRating) => {
           }
     if(location.pathname.includes("new")){
         return(
-            <form className="w-full"  onSubmit={(e)=>{handleNewTicketSubmit(e)}}>
+            <form className="p-20"  onSubmit={(e)=>{handleNewTicketSubmit(e)}}>
             {loading && <Loading />}
             <div className="flex justify-center al">
                 <div className="my-10 text-center text-3xl font-bold text-gray-900">
@@ -200,22 +200,37 @@ const ratingChanged = (newRating) => {
                 <h2 className=" text-2xl mb-3 font-semibold leading-7 text-gray-900">Raise New Support Ticket</h2>            
 
                 <div className="sm:col-span-4">
-                <label htmlFor="subject" className="block text-lg font-medium leading-6 text-gray-900">
+                <label htmlFor="subject" className="block text-lg font-bold text-xl leading-6 text-gray-900">
                     Subject
                 </label>
                 <div className="mt-2">
-                    <input
-                    id="subject"
-                    name="subject"
-                    type="text"
-                    value={newTicketData.subject}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    onChange={(e)=>{handleNewTicketChange(e)}}
-                    />
+                <select
+              id="subject"
+              name="subject"
+              autoComplete="subject"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              value={newTicketData.subject}
+              defaultValue=""
+              onChange={(e)=>{handleNewTicketChange(e)}}>
+              <option> </option>
+              <option>Credit reporting, repair, or other</option>
+              <option>Debt collection</option>
+              <option>Consumer Loan</option>
+              <option>Credit card or prepaid card</option>
+              <option>Mortgage</option>
+              <option>Vehicle loan or lease</option>
+              <option>Student loan</option>
+              <option>Payday loan, title loan, or personal loan</option>
+              <option>Checking or savings account</option>
+              <option>Bank account or service</option> 
+              <option>Money transfer, virtual currency, or money service </option>
+              <option>Money transfers</option>
+              <option>Other financial service</option>
+            </select>
                 </div>
             </div>
             <div className="mt-2 col-span-full">
-              <label htmlFor="description" className="block text-lg font-medium leading-6 text-gray-900">
+              <label htmlFor="description" className="block text-lg font-bold text-xl leading-6 text-gray-900">
                 Description
               </label>
               <div className="mt-2">
@@ -246,23 +261,23 @@ const ratingChanged = (newRating) => {
         )
     }else{
   return (
-  <form className="w-full"  onSubmit={(e)=>{handleTicketSubmit(e)}}>
+  <form className="p-20"  onSubmit={(e)=>{handleTicketSubmit(e)}}>
     {loading && <Loading />}
     <div className="flex justify-center al">
-    <div className="my-3 text-center text-3xl font-bold text-gray-900">
+    <div className="my-3 text-center text-3xl font-bold ">
         Customer Support Ticket </div>
-        <Badge className=" mx-3 my-3 text-center text-2xl font-bold text-gray-900" color={badges.status}>#{id}</Badge>
+        <Badge className=" mx-3 my-3 text-center text-2xl font-bold " color={badges.status}>#{id}</Badge>
     </div>
     <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-          <p className="text-lg">Subject:</p>
-          <h2 className="text-xl font-semibold text-gray-900">{ticketData.subject}</h2>
-          <p className="mt-5 text-lg">Description:</p>
-          <p className="text-gray-900">{ticketData.description}.</p>
-          <p className="mt-5 text-lg">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
+          <p className="font-bold text-xl ">Subject:</p>
+          <h2 className="text-xl  text-black-900">{ticketData.subject}</h2>
+          <p className="mt-5 text-xl font-bold">Description:</p>
+          <p className="text-black-900 text-xl">{ticketData.description}.</p>
+          <p className="mt-5 text-xl font-bold">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
          {ticketData.status=="Resolved" && role=="USER" && <div>
             <form onSubmit={(e)=>{handleFeedbackSubmit(e)}}>
-            <p className="mt-5 text-lg">Feedback: </p>
+            <p className="mt-5 text-xl font-bold">Feedback: </p>
             <ReactStars
               count={5}
               onChange={ratingChanged}
@@ -285,13 +300,13 @@ const ratingChanged = (newRating) => {
           </div>}
             <div className="sm:col-span-3">
                 {role==="ADMIN" && <div>
-                    <p className=" mt-5 text-lg">Update Status </p>
+                    <p className=" mt-5 font-bold text-xl">Update Status </p>
                     <div className="mt-2">
                         <select
                         id="country"
                         name="status"
                         autoComplete="country-name"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-lg sm:leading-6"
                         value={ticketData.status}
                         onChange={(e)=>{handleTicketChange(e)}}>
                         <option>Open</option>
@@ -302,13 +317,13 @@ const ratingChanged = (newRating) => {
                         </select>
                     </div>
                     <div className="mt-2 col-span-full">
-                    <p htmlFor="about" className="mt-5 text-lg">Comment</p>
+                    <p htmlFor="about" className="mt-5 text-xl font-bold">Comment</p>
                     <div className="mt-2">
                         <textarea
                         id="about"
                         name="employeeComment"
                         rows={3}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6"
                         value={ticketData.employeeComment}
                         onChange={(e)=>{handleTicketChange(e)}}/>
                     </div>
@@ -336,13 +351,13 @@ const ratingChanged = (newRating) => {
         </div>   
     </div>
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button onClick={()=>{navigate("/tickets");navigate(0)}} type="button" className="text-sm font-semibold leading-6 text-gray-900">
+        <button onClick={()=>{navigate("/tickets");navigate(0)}} type="button" className="text-lg font-bold leading-8 text-gray-900">
           Cancel
         </button>
         {role==="ADMIN" && <button
         onClick={(e)=>{handleTicketSubmit(e)}}
           type="submit"
-          className="rounded-md bg-maroon px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="rounded-md bg-maroon px-3 py-2 text-lg font-bold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Update
         </button>}

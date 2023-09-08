@@ -33,8 +33,8 @@ function Login() {
         </div>
         <div>
           <div className="sm:flex p-20 sm:justify-between" >
-            <div className=" absolute top-24 left-20 w-2/6 h-2/4">
-              <Slideshow {...{i:1}}/>
+            <div>
+            <img height="300" src='https://www.axisbank.com/images/default-source/revamp_new/progresswithus/dil-de-open-05-09-22.jpg'></img>
             </div>
             <span></span>
             {location.pathname === "/login" && <LoginPage /> }
@@ -42,7 +42,7 @@ function Login() {
             {location.pathname === "/register/customer" && <CustomerRegister/>}
             {location.pathname === "/register/employee" && <EmployeeRegister/>}
           </div>
-          <img className="absolute top-2/3" src={appUseImg}></img>
+          <img className="absolute top-3/2" src={appUseImg}></img>
         </div>
       </div>
     )

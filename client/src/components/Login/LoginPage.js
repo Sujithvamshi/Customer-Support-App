@@ -44,15 +44,15 @@ function LoginPage() {
   return (
         <form className="w-3/4 sm:w-2/6 h-screen" onSubmit={(e)=>{handleUserSubmit(e)}}>
             {loading && <Loading />}
-            <label className="block font-bold text-lg text-center mb-5">Welcome to Login Page</label>
-            <label className="block font-normal mt2-1">Username</label>
+            <label className="block font-bold text-2xl text-maroon text-center mb-5">Welcome to Login Page</label>
+            <label className="block font-bold text-xl text-maroon mt3-1">Username</label>
             <input
               type="text" className="border-0  border-b p-1 w-full mb-4"
               name='username'
               value={userForm.username}
               onChange={(e) => handleUserFormChange(e)}
             />
-            <label className="block font-normal mb-1">Password</label>
+            <label className="block font-bold text-xl text-maroon mb-1">Password</label>
             <input
               type="password" className="border-0  border-b p-1 w-full"
               name='password'

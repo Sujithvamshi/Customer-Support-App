@@ -43,7 +43,7 @@ function Tickets({tickets}) {
         <Card className="mx-5 my-2.5 max-w-md overflow-clip bg-maroon-light">
             <div className="flex justify-between ">
                 <Badge color={badges[ticket.status]}>{ticket.status}</Badge>
-                <p className="text-xs">{ticket.level}</p>
+                <p className="text-s">{(ticket.level == "L1")?"ETA:2H":(ticket.level == "L2")?"ETA:4H":"ETA:24H"}</p>
                 {ticket.status == "Closed" && <Rating>
                 {Array(ticket.feedback.rating).fill(1).map((el, i) =>
                     <Rating.Star />

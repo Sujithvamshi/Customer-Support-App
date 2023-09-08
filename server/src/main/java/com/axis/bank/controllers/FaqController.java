@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.axis.bank.entities.Faq;
 import com.axis.bank.repositories.FaqRepository;
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @RequestMapping("/api/faqs")
 public class FaqController {

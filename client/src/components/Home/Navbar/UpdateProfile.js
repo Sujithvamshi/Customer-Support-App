@@ -97,44 +97,44 @@ function UpdateProfile() {
   }
   if(role == "ADMIN"){
   return (
-    <div className="w-full flex justify-center mt-20">
+    <div className="w-screen h-screen bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% flex justify-center mt-20">
         <form className="w-3/4 sm:w-2/6 " onSubmit={(e)=>{handleEmployeeSubmit(e)}}>
-            <label className="block font-normal mb-1">Employee ID</label>
+            <label className="block font-bold text-l mb-1">Employee ID</label>
             <input
               type="text" className="border-0  border-b p-1 w-full mb-4"
               name='employeeId'
               value={employeeForm.employeeId}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Name</label>
+            <label className="block font-bold text-l mb-1">Name</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='name'
               value={employeeForm.name}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Email</label>
+            <label className="block font-bold text-l mb-1">Email</label>
             <input
               type="email" className="border-0  border-b p-1 w-full"
               name='email'
               value={employeeForm.email}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Contact Details</label>
+            <label className="block font-bold text-l mb-1">Contact Details</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='contactDetails'
               value={employeeForm.contactDetails}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Branch Location</label>
+            <label className="block font-bold text-l mb-1">Branch Location</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='branchLocation'
               value={employeeForm.branchLocation}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-normal mb-1">Level</label>
+            <label className="block font-bold text-l mb-1">Level</label>
             <select
               id="level"
               name="level"
@@ -146,15 +146,15 @@ function UpdateProfile() {
               <option>L2</option>
               <option>L3</option>
             </select>
-            <button type='submit' onClick={(e)=>{handleEmployeeSubmit(e)}} className=" mt-1 items-center rounded-lg bg-maroon b-700 px-10 py-2 text-center text-base font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+            <button type='submit' onClick={(e)=>{handleEmployeeSubmit(e)}} className=" mt-5 items-center rounded-lg bg-maroon b-700 px-10 py-2 text-center text-base font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
               Update</button>
           </form>
         </div>
   )} else {
     return(
-    <div className="w-full flex justify-center mt-20">
+    <div className="w-screen h-screen bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% flex justify-center mt-20">
         <form className="w-3/4 sm:w-2/6 " onSubmit={(e)=>{handleCustomerSubmit(e)}}>
-            <label className="block font-normal mb-1">Account ID</label>
+            <label className="block font-bold text-l mb-1">Account ID</label>
             <input
               type="text" className="border-0  border-b p-1 w-full mb-4"
               name='accountId'
@@ -162,7 +162,7 @@ function UpdateProfile() {
               value={customerForm.accountId}
               onChange={(e) => handleCustomerFormChange(e)}
             />
-            <label className="block font-normal mb-1">Name</label>
+            <label className="block font-bold text-l mb-1">Name</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='name'
@@ -170,7 +170,7 @@ function UpdateProfile() {
               value={customerForm.name}
               onChange={(e) => handleCustomerFormChange(e)}
             />
-            <label className="block font-normal mb-1">Email</label>
+            <label className="block font-bold text-l mb-1">Email</label>
             <input
               type="email" className="border-0  border-b p-1 w-full"
               name='email'
@@ -178,7 +178,7 @@ function UpdateProfile() {
               value={customerForm.email}
               onChange={(e) => handleCustomerFormChange(e)}
             />
-            <label className="block font-normal mb-1">Contact Details</label>
+            <label className="block font-bold text-l mb-1">Contact Details</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='contactDetails'
@@ -186,7 +186,7 @@ function UpdateProfile() {
               value={customerForm.contactDetails}
               onChange={(e) => handleCustomerFormChange(e)}
             />
-            <label className="block font-normal mb-1">Address</label>
+            <label className="block font-bold text-l mb-1">Address</label>
             <input
               type="text" className="border-0  border-b p-1 w-full"
               name='address'
@@ -194,7 +194,7 @@ function UpdateProfile() {
               value={customerForm.address}
               onChange={(e) => handleCustomerFormChange(e)}
             />
-            <button type='submit' onClick={(e)=>{handleCustomerSubmit(e)}} className=" mt-1 items-center rounded-lg bg-maroon b-700 px-10 py-2 text-center text-base font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+            <button type='submit' onClick={(e)=>{handleCustomerSubmit(e)}} className=" mt-5 items-center rounded-lg bg-maroon b-700 px-10 py-2 text-center text-base font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
               Update</button>
           </form>
         </div>

@@ -25,9 +25,9 @@ function CustomerFaq() {
     })
   }
   return (
-    <div className="w-full h-screen text-center px-20 pt-20 bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% ">
+    <div className="w-screen text-center px-20 pt-20 bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% ">
       <form onSubmit={(e)=>{navigate("/tickets/"+searchText)}}>
-      <label className="block font-normal mb-1">Track Complaint Ticket</label>
+      <label className="block font-bold text-2xl mb-1">Track Complaint Ticket</label>
       <input
               type="text"
               className="border rounded p-1 w-1/2 mb-2"
@@ -44,10 +44,10 @@ function CustomerFaq() {
       <div className="flex justify-center text-left">
       <Accordion collapseAll className="w-3/4">
       <Accordion.Panel className="w-full">
-      <Accordion.Title className="text-black">
+      <Accordion.Title className="text-black text-lg">
           {faq.question}
       </Accordion.Title>
-      <Accordion.Content className="text-gray-900">
+      <Accordion.Content className="text-gray-900 text-lg">
           {faq.answer}
       </Accordion.Content>
       </Accordion.Panel>

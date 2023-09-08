@@ -68,7 +68,7 @@ const deleteFaq = async (id) => {
         <h1 className="my-4 text-2xl font-bold text-gray-900">
             Freqently Asked Questions (FAQ's) Editor</h1>
         <div className="m">
-            <label className="block font-normal mb-1">Question</label>
+            <label className="block font-bold text-lg mb-1">Question</label>
             <input
               type="text"
               className="border rounded p-1 w-3/4 mb-2"
@@ -77,7 +77,7 @@ const deleteFaq = async (id) => {
               onChange={(e) => handleFaqChange(e)}
             />
 
-            <label className="block font-normal mb-1">Answer</label>
+            <label className="block font-bold text-lg mb-1">Answer</label>
             <textarea
               type="text"
               className="border rounded w-3/4 p-1"
