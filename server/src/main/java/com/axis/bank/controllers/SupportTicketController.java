@@ -19,7 +19,7 @@ import com.axis.bank.repositories.SupportTicketRepository;
 
 import javax.persistence.EntityNotFoundException;
 
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/tickets")
 public class SupportTicketController {

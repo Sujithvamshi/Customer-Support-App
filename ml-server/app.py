@@ -28,19 +28,19 @@ with open('pickles/classifier.pkl', 'rb') as classifier_file:
         classifier = pickle.load(classifier_file)
 
 @app.route("/ticket-classification", methods=['POST'])
-@cross_origin(origins="http://localhost:3001")
+@cross_origin(origins="http://localhost:3000")
 def predict_complaint():
     data = request.json
     complaint = data['complaint']
     lowercase_string = complaint.lower()
     words = lowercase_string.split()
     assigned_level = None
+    if("Mortgage" in words):
+        assigned_level="L2"
+        keyword="Mortgage"
     for i in range(len(words) - 1):
         window = words[i:i + 2]
         window_str = " ".join(window)
-        if("Mortgage" in words):
-            assigned_level="L2"
-            break
         for keyword, level in level_mapping.items():
             if  window_str in keyword.lower():
                 assigned_level = level
