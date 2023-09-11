@@ -106,6 +106,9 @@ const role = localStorage.getItem('role')
             <Badge color={badges[ticket.status]}>{ticket.status}</Badge>
           </Table.Cell>
           <Table.Cell>
+          {ticket.status == "Resolved" && <Table.Cell className="flex">
+            <Badge color={badges[ticket.status]}>{ticket.status}</Badge>
+          </Table.Cell>}
             {(role==="ADMIN")?  <a className=" text-red-600" onClick={()=> navigate(generatePath("/tickets/"+ticket.id))}>View</a> :
             <a className=" text-red-600" onClick={()=> navigate(generatePath("/tickets/"+ticket.id))}>Edit</a>}
           </Table.Cell>
