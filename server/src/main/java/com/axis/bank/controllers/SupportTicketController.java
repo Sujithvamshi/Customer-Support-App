@@ -8,15 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
-
 import com.axis.bank.entities.SupportTicket;
 import com.axis.bank.repositories.SupportTicketRepository;
-
 import javax.persistence.EntityNotFoundException;
 
 @CrossOrigin(origins = "http://localhost:3000")

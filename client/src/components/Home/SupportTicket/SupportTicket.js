@@ -8,7 +8,7 @@ import { Tabs } from 'flowbite-react';
 import { statuses } from "../../common/Constants";
 export default function SupportTicket() {
     const [tickets,setTickets] = useState([]);
-    const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
+    const role = localStorage.getItem('role')
     const location = useLocation()
     const [activeTab, setActiveTab] = useState("All");
     useEffect(()=>{
@@ -19,7 +19,7 @@ export default function SupportTicket() {
       if(activeTab!=="All"){
         queryArr.push("status="+activeTab)
       }
-      if(role==="ADMIN"){
+      if(role==="EMPLOYEE"){
         AuthApi.get('/employee/'+localStorage.getItem('username')).then((response)=>{
           if(response.status===200){
             queryArr.push("level="+response.data.level)
@@ -31,7 +31,7 @@ export default function SupportTicket() {
         )}
           }
       )}
-      else if(role==="USER"){
+      else if(role==="CUSTOMER"){
         queryArr.push("accountId="+localStorage.getItem('username'))
         AuthApi.get("/tickets?"+queryArr.join("&"))
         .then((response)=>{
@@ -51,7 +51,7 @@ export default function SupportTicket() {
       <div className="px-10">
           <h1 className="my-10 text-2xl font-bold text-gray-900">
           Support Tickets</h1>
-      <Tabs.Group className="w-full"
+      <Tabs.Group  className="w-full"
         onActiveTabChange={(tab) => {setActiveTab(statuses[tab]);console.log(activeTab)}}
       >
         <Tabs.Item active title="All">
@@ -89,7 +89,7 @@ export default function SupportTicket() {
   )
 } else {
   return(
-    <div className="w-full h-screen bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90%">
+    <div className="w-full h-screen bg-maroon-0">
     <TicketView />
     </div>
   )

@@ -2,7 +2,7 @@ import { Dropdown, Navbar,Avatar} from 'flowbite-react';
 import {HiUserCircle} from "react-icons/hi";
 import { useNavigate } from 'react-router-dom';
 export default function NavbarWithDropdown() {
-  const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
+  const role = localStorage.getItem('role')
   const navigate = useNavigate()
   return (
     <Navbar
@@ -44,16 +44,16 @@ export default function NavbarWithDropdown() {
             <p className="p-2 text-lg text-white">Home</p>
         </Navbar.Link>
         
-        { role === "ADMIN" && <Navbar.Link href="/tickets">
+        { (role === "EMPLOYEE"||role=="ADMIN") && <Navbar.Link href="/tickets">
         <p className="p-2 text-lg text-white">Tickets Panel</p>
         </Navbar.Link>}
-        { role==="USER" && <Navbar.Link href="/tickets">
+        { role==="CUSTOMER" && <Navbar.Link href="/tickets">
         <p className="p-2 text-lg text-white">View Tickets</p>
       </Navbar.Link> }
-        { role === "ADMIN" && <Navbar.Link href="/faqs">
+        { (role === "EMPLOYEE"||role=="ADMIN") && <Navbar.Link href="/faqs">
         <p className="p-2 text-lg text-white">FAQ Editor</p>
         </Navbar.Link>}
-        { role==="USER" && <Navbar.Link>
+        { role==="CUSTOMER" && <Navbar.Link>
         <button onClick={(e) => {navigate("/tickets/new")}} className="rounded-lg bg-white m-1 px-4 py-2 ml-20 text-center font-medium text-maroon hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                         Create New Ticket</button>
       </Navbar.Link> }

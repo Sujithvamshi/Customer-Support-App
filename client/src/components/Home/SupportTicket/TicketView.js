@@ -10,7 +10,7 @@ function TicketView() {
     const {id} = useParams();
     const [loading,setLoading] = useState(false)
     const location = useLocation()
-    const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
+    const role = localStorage.getItem('role')
     const navigate = useNavigate()
     const [ticketData,setTicketData] = useState({status:"Open"})
     const [feedback,setFeedback] = useState({});
@@ -275,7 +275,7 @@ const ratingChanged = (newRating) => {
           <p className="mt-5 text-xl font-bold">Description:</p>
           <p className="text-black-900 text-xl">{ticketData.description}.</p>
           <p className="mt-5 text-xl font-bold">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
-         {ticketData.status=="Resolved" && role=="USER" && <div>
+         {ticketData.status=="Resolved" && role=="CUSTOMER" && <div>
             <form onSubmit={(e)=>{handleFeedbackSubmit(e)}}>
             <p className="mt-5 text-xl font-bold">Feedback: </p>
             <ReactStars
@@ -299,7 +299,7 @@ const ratingChanged = (newRating) => {
               </form>
           </div>}
             <div className="sm:col-span-3">
-                {role==="ADMIN" && <div>
+                {role==="EMPLOYEE" && <div>
                     <p className=" mt-5 font-bold text-xl">Update Status </p>
                     <div className="mt-2">
                         <select
@@ -329,10 +329,10 @@ const ratingChanged = (newRating) => {
                     </div>
                 </div>
             </div>}
-            {role==="USER" && ticketData.employeeComment!=null && ticketData.employeeComment.length > 0 && <div><p className=" mt-5 text-lg">Employee Comment:</p>
+            {role==="CUSTOMER" && ticketData.employeeComment!=null && ticketData.employeeComment.length > 0 && <div><p className=" mt-5 text-lg">Employee Comment:</p>
             <p className="text-lg text-gray-600" name="employeeComment" >{ticketData.employeeComment}</p></div>
             }
-            {role==="USER" && ticketData.status==="Waiting For Customer" && 
+            {role==="CUSTOMER" && ticketData.status==="Waiting For Customer" && 
             <div><p className=" mt-5 text-lg">Comment:</p>
                     <div className="mt-2">
                         <textarea
@@ -344,7 +344,7 @@ const ratingChanged = (newRating) => {
                         onChange={(e)=>{handleTicketChange(e)}}/>
                     </div></div>
             }
-            {role==="ADMIN" && ticketData.customerComment!=null && ticketData.customerComment.length > 0 && <div><p>Customer Comment</p>
+            {role==="EMPLOYEE" && ticketData.customerComment!=null && ticketData.customerComment.length > 0 && <div><p>Customer Comment</p>
             <p className=" mt-5 text-lg text-gray-600" name="customerComment" >{ticketData.customerComment}</p></div>
             }
         </div>
@@ -354,28 +354,28 @@ const ratingChanged = (newRating) => {
         <button onClick={()=>{navigate("/tickets");navigate(0)}} type="button" className="text-lg font-bold leading-8 text-gray-900">
           Cancel
         </button>
-        {role==="ADMIN" && <button
+        {role==="EMPLOYEE" && <button
         onClick={(e)=>{handleTicketSubmit(e)}}
           type="submit"
           className="rounded-md bg-maroon px-3 py-2 text-lg font-bold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Update
         </button>}
-        {role==="USER" && ticketData.status === "Waiting For Customer" && <a
+        {role==="CUSTOMER" && ticketData.status === "Waiting For Customer" && <a
         onClick={(e)=>{ticketData.status = "Resolved";handleTicketSubmit(e);}}
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Resolved
         </a>}
-        {role==="USER" && ticketData.status === "Waiting For Customer" && <a
+        {role==="CUSTOMER" && ticketData.status === "Waiting For Customer" && <a
         onClick={(e)=>{ticketData.status = "Open";handleTicketSubmit(e);}}
           type="submit"
           className="rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
         >
           Not Resolved
         </a>}
-        {role==="USER" && <button 
+        {role==="CUSTOMER" && <button 
         onClick={(e)=>{deleteTicket(e)}}
           type="button"
           className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"

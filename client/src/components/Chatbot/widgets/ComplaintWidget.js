@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 function ComplaintWidget() {
     const [loggedin,setLoggedIn] = useState();
-    const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
+    const role = localStorage.getItem('role')
     useEffect(()=>{
         setLoggedIn(localStorage.getItem('token')==null?false:true);
     },[])
@@ -22,7 +22,7 @@ function ComplaintWidget() {
                 </div>
             )
         })}
-        {loggedin && role=="USER" && steps.slice(1).map((step,id) =>{
+        {loggedin && role=="CUSTOMER" && steps.slice(1).map((step,id) =>{
             return(
                 <div className="bg-gray-300 p-1 my-2 rounded-lg">
                     <p className='my-2'>{String(id+1)+". "+step}</p>
@@ -30,7 +30,7 @@ function ComplaintWidget() {
                 </div>
             )
         })}
-        {loggedin && role=="ADMIN" && 
+        {loggedin && role=="EMPLOYEE" && 
                 <div className="bg-gray-300 px-1 py-2 my-2 rounded-lg">
                     <p className='my-2'>View the Assigned Tickets in</p>
                     <a href="/tickets" className="bg-maroon rounded-lg px-3 py-1 text-white" >Tickets Panel</a>

@@ -1,5 +1,6 @@
 import React,{useEffect,useRef,useState} from 'react'
-import { Accordion, Button } from 'flowbite-react';
+import { Disclosure } from '@headlessui/react'
+import { ChevronUpIcon } from '@heroicons/react/20/solid'
 import { AuthApi } from '../../common/Apis';
 function Faqs() {
     const [faqData,setFaqData] = useState([]);
@@ -87,23 +88,34 @@ const deleteFaq = async (id) => {
               onChange={(e) => handleFaqChange(e)}
             />
         </div>
-        <button onClick={(e)=>{addFaq(e)}} className="inline-flex mt-5 mb-20 items-center rounded-lg bg-maroon px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+        <button onClick={(e)=>{addFaq(e)}} className="inline-flex mt-5 mb-20 items-center rounded-lg bg-maroon px-4 py-2 text-center text-sm font-medium text-white hover:bg-maroon-1 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
         Add</button>
-            {faqData.map((faq)=>
-            <div className="flex justify-center">
-            <Accordion collapseAll className="w-3/4">
-            <Accordion.Panel className="w-full">
-            <Accordion.Title>
-                {faq.question}
-            </Accordion.Title>
-            <Accordion.Content>
-                {faq.answer}
-            </Accordion.Content>
-            </Accordion.Panel>
-            </Accordion>
-            <div onClick={()=>{deleteFaq(faq.id)}} className="ml-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" className="w-6 h-6"><path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" /></svg></div>
-            </div>
-            )}
+        <div className="w-full px-20">
+      <div className="mx-auto w-full rounded-2xl">
+      {faqData.map((faq)=>
+       <Disclosure>
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex w-full justify-between rounded-lg bg-maroon-2 px-10 py-5 mb-2 text-left text-xl font-medium text-maroon hover:bg-maroon-1 focus:outline-none focus-visible:ring focus-visible:bg-maroon-1 focus-visible:ring-opacity-75">
+                <span>{faq.question}</span>
+                <div className="flex justify-center">
+                <ChevronUpIcon
+                  className={`${
+                    open ? 'rotate-180 transform' : ''
+                  } h-8 w-8 text-maroon`}
+                />
+                <div onClick={()=>{deleteFaq(faq.id)}} className="ml-3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" className="w-8 h-8"><path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" /></svg></div>
+                </div>
+              </Disclosure.Button>
+              <Disclosure.Panel className="px-5 pt-3 pb-10 text-lg text-maroon-4">
+              {faq.answer}
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
+        )}
+      </div>
+    </div>
     </div>
   )
 }

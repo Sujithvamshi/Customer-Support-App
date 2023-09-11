@@ -39,10 +39,18 @@ public class AuthController {
         this.doAuthenticate(request.getUsername(), request.getPassword());
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(request.getUsername());
         String token = this.helper.generateToken(userDetails);
+        String role = userDetails.getAuthorities().toString();
+        if(role.contains("ADMIN")) {
+            role = "ADMIN";
+        } else if (role.contains("CUSTOMER")) {
+            role = "CUSTOMER";
+        } else {
+            role = "EMPLOYEE";
+        }
         JwtResponse response = JwtResponse.builder()
                 .token(token)
                 .username(userDetails.getUsername())
-                .role(userDetails.getAuthorities().toString())
+                .role(role)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

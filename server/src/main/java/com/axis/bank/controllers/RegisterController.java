@@ -9,15 +9,10 @@ import com.axis.bank.repositories.EmployeeRepository;
 import com.axis.bank.repositories.RoleRepository;
 import com.axis.bank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.Text;
-
-import javax.persistence.EntityNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -34,11 +29,21 @@ public class RegisterController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @PostMapping("/admin")
+    public String adminRegister(@RequestBody User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role roles = roleRepository.findByName("ADMIN").orElseThrow(() -> new RuntimeException("Role Not Found!!"));
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(roles);
+        user.setRoles(roleSet);
+        userRepository.save(user);
+        return "Admin saved Successfully";
+    }
     @PostMapping("/customer")
     public String customerRegister(@RequestBody Customer customer) {
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         customerRepository.save(customer);
-        Role roles = roleRepository.findByName("USER").orElseThrow(() -> new RuntimeException("User Not Found!!"));
+        Role roles = roleRepository.findByName("CUSTOMER").orElseThrow(() -> new RuntimeException("Role Not Found!!"));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roles);
         User user = new User();
@@ -52,7 +57,7 @@ public class RegisterController {
     @PostMapping("/employee")
     public String employeeRegister(@RequestBody Employee employee) {
         employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-        Role roles = roleRepository.findByName("ADMIN").orElseThrow(() -> new RuntimeException("User Not Found!!"));
+        Role roles = roleRepository.findByName("EMPLOYEE").orElseThrow(() -> new RuntimeException("User Not Found!!"));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roles);
         User user = new User();

@@ -8,12 +8,12 @@ function UpdateProfile() {
     const [employeeForm,setEmployeeForm] = useState({})
     const [customerForm,setCustomerForm] = useState({})
     const id = localStorage.getItem('username');
-    const role = (localStorage.getItem('role').includes("USER"))?"USER":"ADMIN"
+    const role = localStorage.getItem('role')
     useEffect(()=>{
-        if(role == 'ADMIN'){
+        if(role == 'EMPLOYEE'){
             getEmployee()
         }
-        if(role == 'USER'){
+        if(role == 'CUSTOMER'){
             getCustomer()
         }
     },[])
@@ -95,7 +95,7 @@ function UpdateProfile() {
           toast('An error occurred while logging in. Please try again later.');
       });
   }
-  if(role == "ADMIN"){
+  if(role == "EMPLOYEE"){
   return (
     <div className="w-screen h-screen bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% flex justify-center mt-20">
         <form className="w-3/4 sm:w-2/6 " onSubmit={(e)=>{handleEmployeeSubmit(e)}}>

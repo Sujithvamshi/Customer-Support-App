@@ -8,7 +8,11 @@ module.exports = {
   theme: {
     colors:{
       'maroon':'#97144d',
-      'maroon-light':'#b8306b'
+      "maroon-0":"#FFF4F9",
+      'maroon-1':'#FFAFD7',
+      "maroon-2":'#FF89B2',
+      "maroon-3":'#E6648F',
+      "maroon-4":'#BE3F6D'
     },
     extend: {},
   },

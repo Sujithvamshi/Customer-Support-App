@@ -11,7 +11,7 @@ function Login() {
   const location = useLocation();
   const navigate = useNavigate();
     return (
-      <div>
+      <div className=" bg-gradient-to-b from-background from-10% to-20% to-white">
         <div className="bg-maroon py-2 flex justify-between">
           <a href='/'><img
               alt="Axis Bank"

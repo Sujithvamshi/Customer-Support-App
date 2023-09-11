@@ -1,7 +1,8 @@
 import React,{useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import Slideshow from './Slideshow'
-import { Accordion } from 'flowbite-react'
+import { Disclosure } from '@headlessui/react'
+import {ChevronUpIcon} from '@heroicons/react/20/solid'
 import { AuthApi } from '../common/Apis'
 import { toast } from '../common/StylingConstants'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
@@ -27,7 +28,7 @@ function Home() {
   })
 }
   return (
-      <div>
+      <div className='bg-maroon-0'>
         <div className="w-screen">
           <div className="fixed  z-10 w-screen bg-maroon py-2 flex justify-between">
             <a href='/'><img
@@ -49,26 +50,37 @@ function Home() {
               <Slideshow {...{i:0}}/>
             </div>
           </div>
-          <a href="#faq"className="absolute w-10 h-10 p-1 bg-gray-300 rounded-full bottom-10 left-1/2">
+          <a href="#faq"className="fixed w-10 h-10 p-1 bg-gray-300 rounded-full bottom-10 left-1/2">
             <ChevronDownIcon/>
           </a>
         </div>
         <h1 id='faq' className="m-10 text-center text-2xl font-bold text-gray-900">
         Freqently Asked Questions (FAQ's)</h1>
+      <div className="w-full px-20">
+      <div className="mx-auto w-full rounded-2xl">
       {faqData.map((faq)=>
-        <div className="flex justify-center text-left">
-        <Accordion collapseAll className="w-3/4">
-        <Accordion.Panel className="w-full">
-        <Accordion.Title className="text-black">
-            {faq.question}
-        </Accordion.Title>
-        <Accordion.Content className="text-gray-900">
-            {faq.answer}
-        </Accordion.Content>
-        </Accordion.Panel>
-        </Accordion>
-        </div>
+       <Disclosure>
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex w-full justify-between rounded-lg bg-maroon-2 px-10 py-5 mb-2 text-left text-xl font-medium text-maroon hover:bg-maroon-1 focus:outline-none focus-visible:ring focus-visible:bg-maroon-1 focus-visible:ring-opacity-75">
+                <span>{faq.question}</span>
+                <div className="flex justify-center">
+                <ChevronUpIcon
+                  className={`${
+                    open ? 'rotate-180 transform' : ''
+                  } h-8 w-8 text-maroon`}
+                />
+                </div>
+              </Disclosure.Button>
+              <Disclosure.Panel className="px-5 pt-3 pb-10 text-lg text-maroon-4">
+              {faq.answer}
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
         )}
+      </div>
+    </div>
         <div className="mt-20">
           <FooterWithSocialMediaIcons />
         </div>

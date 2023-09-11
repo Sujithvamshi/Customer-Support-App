@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Accordion } from 'flowbite-react';
+import { Disclosure } from '@headlessui/react'
+import { ChevronUpIcon } from '@heroicons/react/20/solid'
 import { AuthApi } from '../../common/Apis';
 import { toast } from '../../common/StylingConstants';
 import { useNavigate } from 'react-router-dom';
-
 function CustomerFaq() {
     const [faqData,setFaqData] = useState([]);
     const [searchText,setSearchText] = useState("")
@@ -25,7 +25,7 @@ function CustomerFaq() {
     })
   }
   return (
-    <div className="w-screen text-center px-20 pt-20 bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% ">
+    <div className="w-screen text-center px-20 pt-20">
       <form onSubmit={(e)=>{navigate("/tickets/"+searchText)}}>
       <label className="block font-bold text-2xl mb-1">Track Complaint Ticket</label>
       <input
@@ -40,20 +40,31 @@ function CustomerFaq() {
         </form>
       <h1 className="mb-10 text-center text-2xl font-bold text-gray-900">
       Freqently Asked Questions (FAQ's)</h1>
-    {faqData.map((faq)=>
-      <div className="flex justify-center text-left">
-      <Accordion collapseAll className="w-3/4">
-      <Accordion.Panel className="w-full">
-      <Accordion.Title className="text-black text-lg">
-          {faq.question}
-      </Accordion.Title>
-      <Accordion.Content className="text-gray-900 text-lg">
-          {faq.answer}
-      </Accordion.Content>
-      </Accordion.Panel>
-      </Accordion>
+      <div className="w-full px-20">
+      <div className="mx-auto w-full text-left rounded-2xl">
+      {faqData.map((faq)=>
+       <Disclosure>
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex w-full justify-between rounded-lg bg-maroon-2 px-10 py-5 mb-2 text-left text-xl font-medium text-maroon hover:bg-maroon-1 focus:outline-none focus-visible:ring focus-visible:bg-maroon-1 focus-visible:ring-opacity-75">
+                <span>{faq.question}</span>
+                <div className="flex justify-center">
+                <ChevronUpIcon
+                  className={`${
+                    open ? 'rotate-180 transform' : ''
+                  } h-8 w-8 text-maroon`}
+                />
+                </div>
+              </Disclosure.Button>
+              <Disclosure.Panel className="px-5 pt-3 pb-10 text-lg text-maroon-4">
+              {faq.answer}
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
+        )}
       </div>
-      )}
+    </div>
     </div>
   )
 }
