@@ -12,6 +12,7 @@ function AdminDashboard() {
   const [statusCounts, setStatusCounts] = useState({});
   const [levelCounts, setLevelCounts] = useState({L1:0,L2:0,L3:0});
   const [load,setLoad] = useState(true)
+  const [dataByDay,setDataByDay] = useState({})
   useEffect(()=>{
     getTickets();
     setLoad(false);
@@ -21,6 +22,7 @@ function AdminDashboard() {
       countLevelCounts();
       countStatusTickets();
       setLoad(true)
+      aggregateDataByDay(tickets)
     }
   },[tickets])
   useEffect(()=>{
@@ -68,6 +70,20 @@ function AdminDashboard() {
       }
       setLevelCounts(levels);
     }
+    const aggregateDataByDay = (tickets) => {
+      const _dataByDay = {};
+      tickets.forEach((ticket) => {
+        const timestamp = ticket.timestamp;
+        const date = new Date(timestamp);
+        const dateString = `${date.getUTCFullYear()}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`;
+        if (!_dataByDay[dateString]) {
+          _dataByDay[dateString] = 0;
+        }
+        _dataByDay[dateString] += 1;
+      });
+      setDataByDay(_dataByDay);
+      console.log(_dataByDay)
+    };
   return (
     <div>
       <div className="flex text-center justify-between">
@@ -101,7 +117,32 @@ function AdminDashboard() {
             type: 'pie',
           },
         ]}
-        layout={{ width: window.screen.width/2,height: window.screen.height/2, title: 'Ticket Status Distribution' , paper_bgcolor: 'transparent'}}
+        layout={{ width: window.screen.width/3,height: window.screen.height/2, title: 'Ticket Status Distribution' , paper_bgcolor: 'transparent'}}
+      />
+      <Plot
+        data={[
+          {
+            x: Object.keys(dataByDay),
+            y: Object.values(dataByDay),
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Total Values',
+          },
+        ]}
+        layout={{width: window.screen.width/3,height: window.screen.height/2,
+          title: 'Daily Created Tickets',
+          xaxis: {
+            title: 'Date',
+            showgrid: false,
+          },
+          yaxis: {
+            title: 'Total Value',
+            showgrid: false,
+          },
+          showgrid: false,
+          paper_bgcolor: 'transparent',
+          plot_bgcolor: 'transparent'
+        }}
       />
       <Plot
         data={[
@@ -114,7 +155,7 @@ function AdminDashboard() {
             }
           },
         ]}
-        layout={{ width: window.screen.width/2,height: window.screen.height/2, title: 'Level Wise Distribution',
+        layout={{ width: window.screen.width/3,height: window.screen.height/2, title: 'Level Wise Distribution',
         xaxis: {
           title: 'Labels',
           showgrid: false,
@@ -125,7 +166,8 @@ function AdminDashboard() {
           showgrid: false
         },
         showgrid: false, 
-        paper_bgcolor: 'transparent'}}
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent'}}
       />
     </div>
       <div className="mx-5">
