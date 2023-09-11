@@ -19,7 +19,7 @@ function AdminDashboard() {
   useEffect(()=>{
     if(!load){
       countLevelCounts();
-      countStatusTickets()
+      countStatusTickets();
       setLoad(true)
     }
   },[tickets])
@@ -59,13 +59,14 @@ function AdminDashboard() {
       setStatusCounts(counts);
     };
     const countLevelCounts = () => {
+      const levels = {};
+      levels["L1"] = 0;
+      levels["L2"] = 0;
+      levels["L3"] = 0;
       for (const ticket of tickets) {
-        setLevelCounts({
-          ...levelCounts,
-          [ticket.level]: levelCounts[ticket.level]++
-        });
+        levels[ticket.level]++;
       }
-      console.log(levelCounts)
+      setLevelCounts(levels);
     }
   return (
     <div>
@@ -124,8 +125,6 @@ function AdminDashboard() {
           showgrid: false
         },
         showgrid: false, 
-        bargap: 0.2, // Adjust the gap between bars
-        bargroupgap: 0.1, // Adjust the gap between bar groups
         paper_bgcolor: 'transparent'}}
       />
     </div>
