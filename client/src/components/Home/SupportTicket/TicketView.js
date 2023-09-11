@@ -275,29 +275,9 @@ const ratingChanged = (newRating) => {
           <p className="mt-5 text-xl font-bold">Description:</p>
           <p className="text-black-900 text-xl">{ticketData.description}.</p>
           <p className="mt-5 text-xl font-bold">Status: <p className="font-extrabold" name="status" onChange={(e)=>{handleTicketChange(e)}}>{ticketData.status}</p></p>
-         {ticketData.status=="Resolved" && role=="CUSTOMER" && <div>
-            <form onSubmit={(e)=>{handleFeedbackSubmit(e)}}>
-            <p className="mt-5 text-xl font-bold">Feedback: </p>
-            <ReactStars
-              count={5}
-              onChange={ratingChanged}
-              size={40}
-              value={feedback.rating}
-              emptyIcon={<i className="far fa-star"></i>}
-              fullIcon={<i className="fa fa-star"></i>}
-              activeColor="#ffd700"
-            />
-            <input
-                    type="text"
-                    className="border rounded p-1 w-1/2 mb-2"
-                    name='content'
-                    value={feedback.content}
-                    onChange={(e) => handleFeedbackChanges(e)}
-                  />
-              <button onClick={(e)=>{handleFeedbackSubmit(e)}} className="inline-flex mt-5 ml-2 mb-20 items-center rounded-lg bg-maroon px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-              Submit Feedback</button>
-              </form>
-          </div>}
+          {role==="EMPLOYEE" && ticketData.customerComment!=null && ticketData.customerComment.length > 0 && <div><p className="mt-5 text-xl font-bold">Customer Comment</p>
+            <p className="text-xl" name="customerComment" >{ticketData.customerComment}</p></div>
+            }
             <div className="sm:col-span-3">
                 {role==="EMPLOYEE" && <div>
                     <p className=" mt-5 font-bold text-xl">Update Status </p>
@@ -329,11 +309,11 @@ const ratingChanged = (newRating) => {
                     </div>
                 </div>
             </div>}
-            {role==="CUSTOMER" && ticketData.employeeComment!=null && ticketData.employeeComment.length > 0 && <div><p className=" mt-5 text-lg">Employee Comment:</p>
-            <p className="text-lg text-gray-600" name="employeeComment" >{ticketData.employeeComment}</p></div>
+            {role==="CUSTOMER" && ticketData.employeeComment!=null && ticketData.employeeComment.length > 0 && <div><p className=" mt-5 text-xl font-bold">Employee Comment:</p>
+            <p className="text-xl" name="employeeComment" >{ticketData.employeeComment}</p></div>
             }
             {role==="CUSTOMER" && ticketData.status==="Waiting For Customer" && 
-            <div><p className=" mt-5 text-lg">Comment:</p>
+            <div><p className=" mt-5 text-xl font-bold">Comment:</p>
                     <div className="mt-2">
                         <textarea
                         id="about"
@@ -344,9 +324,29 @@ const ratingChanged = (newRating) => {
                         onChange={(e)=>{handleTicketChange(e)}}/>
                     </div></div>
             }
-            {role==="EMPLOYEE" && ticketData.customerComment!=null && ticketData.customerComment.length > 0 && <div><p>Customer Comment</p>
-            <p className=" mt-5 text-lg text-gray-600" name="customerComment" >{ticketData.customerComment}</p></div>
-            }
+            {ticketData.status=="Resolved" && role=="CUSTOMER" && <div>
+            <form onSubmit={(e)=>{handleFeedbackSubmit(e)}}>
+            <p className="mt-5 text-xl font-bold">Feedback: </p>
+            <ReactStars
+              count={5}
+              onChange={ratingChanged}
+              size={40}
+              value={feedback.rating}
+              emptyIcon={<i className="far fa-star"></i>}
+              fullIcon={<i className="fa fa-star"></i>}
+              activeColor="#ffd700"
+            />
+            <input
+                    type="text"
+                    className="border rounded p-1 w-1/2 mb-2"
+                    name='content'
+                    value={feedback.content}
+                    onChange={(e) => handleFeedbackChanges(e)}
+                  />
+              <button onClick={(e)=>{handleFeedbackSubmit(e)}} className="inline-flex mt-5 ml-2 mb-20 items-center rounded-lg bg-maroon px-4 py-2 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+              Submit Feedback</button>
+              </form>
+          </div>}
         </div>
         </div>   
     </div>

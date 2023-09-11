@@ -29,9 +29,9 @@ export default function NavbarWithDropdown() {
               {role}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item href="/update-profile">
+          {role!="ADMIN" && <Dropdown.Item href="/update-profile">
             Update Profile
-          </Dropdown.Item>
+          </Dropdown.Item>}
           <Dropdown.Divider/>
           <Dropdown.Item href="/" className="text-red-700 hover:text-red-900">
             Sign out
@@ -49,6 +49,9 @@ export default function NavbarWithDropdown() {
         </Navbar.Link>}
         { role==="CUSTOMER" && <Navbar.Link href="/tickets">
         <p className="p-2 text-lg text-white">View Tickets</p>
+      </Navbar.Link> }
+      { role==="ADMIN" && <Navbar.Link href="/level">
+        <p className="p-2 text-lg text-white">Employee Level Assigner</p>
       </Navbar.Link> }
         { (role === "EMPLOYEE"||role=="ADMIN") && <Navbar.Link href="/faqs">
         <p className="p-2 text-lg text-white">FAQ Editor</p>

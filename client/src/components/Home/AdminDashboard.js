@@ -18,10 +18,10 @@ function AdminDashboard() {
   },[])
   useEffect(()=>{
     if(!load){
+      countLevelCounts();
       countStatusTickets()
       setLoad(true)
     }
-    countLevelCounts();
   },[tickets])
   useEffect(()=>{
     if(status!=="All"){

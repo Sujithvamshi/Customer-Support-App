@@ -29,6 +29,7 @@ const App = () => {
           <Route path="/tickets/:id" element={<Dashboard/>} />
           <Route path="/faqs" element={<Dashboard/>} />
           <Route path="/update-profile" element={<Dashboard/>} />
+          <Route path="/level" element={<Dashboard/>} />
       </Routes>
     </Router>
     <div>

@@ -32,6 +32,14 @@ function CustomerRegister() {
                 return
             }
         }
+        if (!customerForm["email"].includes("@") || !customerForm["email"].includes(".com")) {
+          toast("Enter a valid email");
+          return
+      }
+      if (customerForm["contactDetails"].length != 10) {
+        toast("Enter a valid Contact");
+        return
+    }
         UnAuthApi.post("/register/customer",customerForm).then((response) => {
             if(response.status === 200){
                 toast('Customer created successfully')

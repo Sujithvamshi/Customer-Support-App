@@ -28,6 +28,14 @@ function EmployeeRegister() {
         toast("Password Does Not Match")
         return
     }
+    if (!employeeForm["email"].includes("@") || !employeeForm["email"].includes(".com")) {
+      toast("Enter a valid email");
+      return
+  }
+  if (employeeForm["contactDetails"].length != 10) {
+    toast("Enter a valid Contact");
+    return
+}
     for (const key in employeeForm) {
         if (employeeForm.hasOwnProperty(key) && !employeeForm[key]) {
             toast(key.toUpperCase() +" field required")

@@ -8,6 +8,7 @@ import UpdateProfile from '../Home/Navbar/UpdateProfile';
 import FooterWithSocialMediaIcons from '../common/DefaultFooter';
 import UpdatedSupportTicket from './SupportTicket/UpdatedSupportTicket';
 import AdminDashboard from './AdminDashboard';
+import LevelAssigner from './LevelAssigner';
 function Dashboard() {
   const [loggedIn,setLoggedIn] = useState(false);
   const location = useLocation()
@@ -30,6 +31,7 @@ function Dashboard() {
       {location.pathname.includes("/tickets") && <UpdatedSupportTicket />}
       {location.pathname=="/faqs" && <Faqs />}
       {location.pathname === "/update-profile" && <UpdateProfile/>}
+      {location.pathname === "/level" && <LevelAssigner/>}
       </div>
     </div>}
     

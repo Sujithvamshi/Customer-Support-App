@@ -61,6 +61,14 @@ function UpdateProfile() {
             return
         }
     }
+    if (!employeeForm["email"].includes("@") || !employeeForm["email"].includes(".com")) {
+      toast("Enter a valid email");
+      return
+  }
+  if (employeeForm["contactDetails"].length != 10) {
+    toast("Enter a valid Contact");
+    return
+}
     AuthApi.put("/employee",employeeForm).then((response) => {
         if(response.status === 200){
             toast('Employee Updated successfully')
@@ -82,6 +90,14 @@ function UpdateProfile() {
             return
         }
     }
+    if (customerForm["contactDetails"].length != 10) {
+      toast("Enter a valid Contact");
+      return
+  }
+    if (!customerForm["email"].includes("@") || !customerForm["email"].includes(".com")) {
+      toast("Enter a valid email");
+      return
+  }
     AuthApi.put("/customer",customerForm).then((response) => {
         if(response.status === 200){
             toast('Customer Updated successfully')
@@ -97,22 +113,12 @@ function UpdateProfile() {
   }
   if(role == "EMPLOYEE"){
   return (
-    <div className="w-screen h-screen bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% flex justify-center mt-20">
+    <div className="w-screen h-screen bg-gradient-to-t from-maroon from-10% via-maroon-0 via-400% to-maroon-0  to-90% flex justify-center mt-20">
         <form className="w-3/4 sm:w-2/6 " onSubmit={(e)=>{handleEmployeeSubmit(e)}}>
             <label className="block font-bold text-l mb-1">Employee ID</label>
-            <input
-              type="text" className="border-0  border-b p-1 w-full mb-4"
-              name='employeeId'
-              value={employeeForm.employeeId}
-              onChange={(e) => handleEmployeeFormChange(e)}
-            />
+            <p className="p-1 w-full mb-4">{employeeForm.employeeId}</p>
             <label className="block font-bold text-l mb-1">Name</label>
-            <input
-              type="text" className="border-0  border-b p-1 w-full"
-              name='name'
-              value={employeeForm.name}
-              onChange={(e) => handleEmployeeFormChange(e)}
-            />
+            <p className="p-1 w-full mb-4">{employeeForm.name}</p>
             <label className="block font-bold text-l mb-1">Email</label>
             <input
               type="email" className="border-0  border-b p-1 w-full"
@@ -155,21 +161,9 @@ function UpdateProfile() {
     <div className="w-screen h-screen bg-gradient-to-t from-maroon from-10% via-white via-400% to-white to-90% flex justify-center mt-20">
         <form className="w-3/4 sm:w-2/6 " onSubmit={(e)=>{handleCustomerSubmit(e)}}>
             <label className="block font-bold text-l mb-1">Account ID</label>
-            <input
-              type="text" className="border-0  border-b p-1 w-full mb-4"
-              name='accountId'
-              required
-              value={customerForm.accountId}
-              onChange={(e) => handleCustomerFormChange(e)}
-            />
+            <p className="p-1 w-full mb-4">{customerForm.accountId}</p>
             <label className="block font-bold text-l mb-1">Name</label>
-            <input
-              type="text" className="border-0  border-b p-1 w-full"
-              name='name'
-              required
-              value={customerForm.name}
-              onChange={(e) => handleCustomerFormChange(e)}
-            />
+            <p className="p-1 w-full mb-4">{customerForm.name}</p>
             <label className="block font-bold text-l mb-1">Email</label>
             <input
               type="email" className="border-0  border-b p-1 w-full"

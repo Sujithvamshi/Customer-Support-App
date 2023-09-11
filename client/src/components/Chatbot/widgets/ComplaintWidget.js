@@ -30,7 +30,7 @@ function ComplaintWidget() {
                 </div>
             )
         })}
-        {loggedin && role=="EMPLOYEE" && 
+        {loggedin && (role=="EMPLOYEE" || role == "ADMIN") &&
                 <div className="bg-gray-300 px-1 py-2 my-2 rounded-lg">
                     <p className='my-2'>View the Assigned Tickets in</p>
                     <a href="/tickets" className="bg-maroon rounded-lg px-3 py-1 text-white" >Tickets Panel</a>

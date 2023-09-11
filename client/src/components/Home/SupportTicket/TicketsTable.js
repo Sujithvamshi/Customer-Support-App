@@ -36,15 +36,10 @@ const role = localStorage.getItem('role')
     <Table hoverable>
       <Table.Head className="text-sm">
         <Table.HeadCell>
-        <span className="sr-only">
-            timestamp
-          </span>
+          Created At
         </Table.HeadCell>
         <Table.HeadCell>
           Account ID
-        </Table.HeadCell>
-        <Table.HeadCell>
-          Employee ID
         </Table.HeadCell>
         <Table.HeadCell>
           Subject
@@ -65,14 +60,22 @@ const role = localStorage.getItem('role')
         {tickets.map(ticket => {
         return (<Table.Row className="bg-white text-black dark:border-gray-700 dark:bg-gray-800">
           <Table.Cell className="whitespace-nowrap font-medium text-maroon dark:text-white">
-          {(ticket.status == "Closed" && role=="ADMIN")?<Rating>
-                {Array(ticket.feedback.rating).fill(1).map((el, i) =>
-                    <Rating.Star />
-                )}
-                {Array(5-ticket.feedback.rating).fill(1).map((el, i) =>
-                    <Rating.Star filled={false}/>
-                )}
-                </Rating>:calculateTimeElapsed(ticket.timestamp)}
+          <div className="text-center">
+            <div>
+              {(ticket.status == "Closed" && role=="ADMIN")?<Rating>
+                  {Array(ticket.feedback.rating).fill(1).map((el, i) =>
+                      <Rating.Star />
+                  )}
+                  {Array(5-ticket.feedback.rating).fill(1).map((el, i) =>
+                      <Rating.Star filled={false}/>
+                  )}
+                  </Rating>:calculateTimeElapsed(ticket.timestamp)}
+              </div>
+              <div>
+                <p>{ticket.timestamp.split("T")[1].slice(0,5)} </p>
+                <p>{ticket.timestamp.split("T")[0]}</p>
+              </div>
+            </div>
           </Table.Cell>
           <Table.Cell>
             {ticket.accountId}

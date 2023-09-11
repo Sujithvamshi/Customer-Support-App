@@ -38,6 +38,7 @@ def predict_complaint():
     if("Mortgage" in words):
         assigned_level="L2"
         keyword="Mortgage"
+        return {"keyword":keyword,"assigned_level":assigned_level}
     for i in range(len(words) - 1):
         window = words[i:i + 2]
         window_str = " ".join(window)
