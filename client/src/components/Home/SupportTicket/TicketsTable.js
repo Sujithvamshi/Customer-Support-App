@@ -67,9 +67,9 @@ const role = localStorage.getItem('role')
           Status
         </Table.HeadCell>
         <Table.HeadCell>
-          <span className="sr-only">
-            Edit
-          </span>
+          <div className="sr-only">
+            edit
+          </div>
         </Table.HeadCell>
       </Table.Head>
       <Table.Body className="divide-y">
@@ -105,10 +105,11 @@ const role = localStorage.getItem('role')
           <Table.Cell className="flex">
             <Badge color={badges[ticket.status]}>{ticket.status}</Badge>
           </Table.Cell>
-          <Table.Cell className="flex">
-            {ticket.status == "Resolved" && role=="CUSTOMER" && <a className=" text-red-600" onClick={()=> navigate(generatePath("/tickets/"+ticket.id))}>Give Feedback</a>}
-            {(role==="ADMIN")?  <a className=" text-red-600" onClick={()=> navigate(generatePath("/tickets/"+ticket.id))}>View</a> :
-            <a className=" text-red-600" onClick={()=> navigate(generatePath("/tickets/"+ticket.id))}>Edit</a>}
+          <Table.Cell>
+            <div className="flex">
+              {(ticket.status == "Resolved" && role=="CUSTOMER")? <a className=" text-red-600" onClick={()=> navigate(generatePath("/tickets/"+ticket.id))}>Give Feedback</a>:(role==="ADMIN")?  <a className=" text-red-600" onClick={()=> navigate(generatePath("/tickets/"+ticket.id))}>View</a> :
+              <a className=" text-red-600" onClick={()=> navigate(generatePath("/tickets/"+ticket.id))}>Edit</a>}
+            </div>
           </Table.Cell>
         </Table.Row>)})}
       </Table.Body>
