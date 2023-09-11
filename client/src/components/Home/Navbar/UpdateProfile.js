@@ -119,9 +119,9 @@ function UpdateProfile() {
             <p className="p-1 w-full mb-4">{employeeForm.employeeId}</p>
             <label className="block font-bold text-l mb-1">Name</label>
             <p className="p-1 w-full mb-4">{employeeForm.name}</p>
-            <label className="block font-bold text-l mb-1">Email</label>
             <label className="block font-bold text-l mb-1">Level</label>
             <p className="p-1 w-full mb-4">{employeeForm.level}</p>
+            <label className="block font-bold text-l mb-1">Email</label>
             <input
               type="email" className="border-0  border-b p-1 w-full"
               name='email'
