@@ -90,7 +90,7 @@ public class RegisterController {
             Customer customer = customerRepository.findByAccountId(user.getUsername()).orElse(null);
             if (customer != null) {
                 customer.setPassword(user.getPassword());
-                Role role = roleRepository.findByName("USER").orElseThrow(()->new RuntimeException("Role Not Found"));
+                Role role = roleRepository.findByName("CUSTOMER").orElseThrow(()->new RuntimeException("Role Not Found"));
                 user.setRoles(new HashSet<Role>(){{add(role);}});
                 userRepository.save(user);
                 customerRepository.save(customer);
@@ -100,7 +100,7 @@ public class RegisterController {
             Employee employee = employeeRepository.findByEmployeeId(user.getUsername()).orElse(null);
             if (employee != null) {
                 employee.setPassword(user.getPassword());
-                Role role = roleRepository.findByName("ADMIN").orElseThrow(()->new RuntimeException("Role Not Found"));
+                Role role = roleRepository.findByName("EMPLOYEE").orElseThrow(()->new RuntimeException("Role Not Found"));
                 user.setRoles(new HashSet<Role>(){{add(role);}});
                 userRepository.save(user);
                 employeeRepository.save(employee);

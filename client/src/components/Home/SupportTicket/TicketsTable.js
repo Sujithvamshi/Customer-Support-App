@@ -32,6 +32,22 @@ const role = localStorage.getItem('role')
       return '24+ Hours ago';
     }
   }
+  function convertTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1;
+    const year = date.getUTCFullYear();
+    const formattedDate = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
+    const hours = date.getUTCHours() + 5; 
+    const minutes = date.getUTCMinutes() + 30; 
+    const adjustedHours = hours % 24;
+    const adjustedMinutes = minutes % 60;
+    const formattedTime = `${adjustedHours.toString().padStart(2, '0')}:${adjustedMinutes.toString().padStart(2, '0')}`;
+    return {
+      date: formattedDate,
+      time: formattedTime,
+    };
+  }
   return (
     <Table hoverable>
       <Table.Head className="text-sm">
@@ -72,8 +88,8 @@ const role = localStorage.getItem('role')
                   </Rating>:calculateTimeElapsed(ticket.timestamp)}
               </div>
               <div>
-                <p>{ticket.timestamp.split("T")[1].slice(0,5)} </p>
-                <p>{ticket.timestamp.split("T")[0]}</p>
+                <p>{convertTimestamp(ticket.timestamp).time} </p>
+                <p>{convertTimestamp(ticket.timestamp).date}</p>
               </div>
             </div>
           </Table.Cell>

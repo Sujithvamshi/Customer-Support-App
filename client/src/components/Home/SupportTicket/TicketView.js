@@ -119,6 +119,10 @@ const ratingChanged = (newRating) => {
           const handleNewTicketSubmit = async (e) => {
             e.preventDefault();
             setLoading(true)
+            if(newTicketData.description.length==0){
+              toast("Enter Description")
+              return
+            }
             MlApi.post("/ticket-classification",{
               complaint : newTicketData.subject+" "+newTicketData.description
             }).then(response=>{

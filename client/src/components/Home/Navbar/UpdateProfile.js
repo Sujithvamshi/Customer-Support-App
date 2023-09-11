@@ -120,6 +120,8 @@ function UpdateProfile() {
             <label className="block font-bold text-l mb-1">Name</label>
             <p className="p-1 w-full mb-4">{employeeForm.name}</p>
             <label className="block font-bold text-l mb-1">Email</label>
+            <label className="block font-bold text-l mb-1">Level</label>
+            <p className="p-1 w-full mb-4">{employeeForm.level}</p>
             <input
               type="email" className="border-0  border-b p-1 w-full"
               name='email'
@@ -140,18 +142,6 @@ function UpdateProfile() {
               value={employeeForm.branchLocation}
               onChange={(e) => handleEmployeeFormChange(e)}
             />
-            <label className="block font-bold text-l mb-1">Level</label>
-            <select
-              id="level"
-              name="level"
-              autoComplete="level"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-              value={employeeForm.level}
-              onChange={(e)=>{handleEmployeeFormChange(e)}}>
-              <option>L1</option>
-              <option>L2</option>
-              <option>L3</option>
-            </select>
             <button type='submit' onClick={(e)=>{handleEmployeeSubmit(e)}} className=" mt-5 items-center rounded-lg bg-maroon b-700 px-10 py-2 text-center text-base font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
               Update</button>
           </form>

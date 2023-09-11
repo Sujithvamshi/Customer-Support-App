@@ -35,7 +35,7 @@ def predict_complaint():
     lowercase_string = complaint.lower()
     words = lowercase_string.split()
     assigned_level = None
-    if("Mortgage" in words):
+    if("mortgage" in words):
         assigned_level="L2"
         keyword="Mortgage"
         return {"keyword":keyword,"assigned_level":assigned_level}
